@@ -68,7 +68,7 @@ def table_content(logs):
                     <td style="width: 70%; color:#F7464A;">{}</td>
                     <td style="width: 10%; "><span  class="extrasmall">{}</span></td>
                 </tr>                
-                '''.format(status[Status.BROKEN][0],status[Status.BROKEN][1],log["error"],log["start-time"])
+                '''.format(status[Status.BROKEN][0],status[Status.BROKEN][1],log["error"][:500],log["start-time"])
         elif log["type"] == "verify":
             type_ = '''
                         <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">{}</a>

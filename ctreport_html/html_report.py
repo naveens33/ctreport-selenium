@@ -88,7 +88,7 @@ def body(test_details,tests,status):
 								<i class="fas fa-tasks" style="font-size:30px; color:#808080;"></i>
 							</div>
 							<a class="navbar-brand disabled">
-								<img  class="img-fluid" src="logo1.png" style="height: 30px;">
+								<img  class="img-fluid" src="logo.png" style="height: 30px;">
 							</a>					
 						</div>
 					</div>

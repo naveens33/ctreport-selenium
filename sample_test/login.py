@@ -1,7 +1,9 @@
+import pytest
 from ctlistener import Test, Priority, Severity
 import traceback
 import time
 
+@pytest.mark.run(order=2)
 def test_do_login(driver):
     test = Test("Do login scenario", description="test01", priority=Priority.LOW)
     try:
@@ -22,16 +24,16 @@ def test_do_login(driver):
     finally:
         test.finish()
 
+@pytest.mark.run(order=1)
 def test_forgot_password(driver):
-    test=Test("forgot password",description="test02",priority=Priority.MEDIUM)
+    test=Test("Forgot password",description="test02",priority=Priority.MEDIUM)
     try:
-        test.log("test02 started")
-        time.sleep(3)
-        print("TestCase1.test02")
-        test.log("test01 ended")
-        time.sleep(2)
-        raise ArithmeticError
+        test.log("Navigated to Login page")
+        driver.find_element_by_xpath("//a[contains(text(),'Forgot')]").click()
+        test.log("Navigated to Forgot Password page")
+        driver.find_element_by_id("invalid").click()
     except Exception as err:
         test.broken(type(err).__name__,err,traceback.format_exc())
     finally:
+        driver.get("http://zero.webappsecurity.com/")
         test.finish()
