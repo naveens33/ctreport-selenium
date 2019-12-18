@@ -10,8 +10,8 @@ def head(tests):
     <head>
         <title>DIAS Mobile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<link rel="stylesheet" type="text/css" href="MoonIcon.css" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/style.css" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
 		<link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
@@ -60,7 +60,7 @@ def head(tests):
     '''
     return content
 
-def body(test_details,tests,status):
+def body(test_details, logo,tests,status):
     content = '''
     <body class="ash">
         <!--<button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>-->
@@ -70,7 +70,7 @@ def body(test_details,tests,status):
 				<!-- logo -->
 				<div class="Logo-Search" style="padding: 6px 0;">
 					<a class="navbar-brand disabled">
-						<img  class="img-fluid" src="https://productvault-pvstaging.azurewebsites.net/Content/images/delta_logo.png" style="height: 25px;">
+						<img  class="img-fluid" src=''' + logo + ''' style="height: 25px;">
 					</a>
 					<div>
 						<div class="badge badge-light" style="font-size: 100%; padding:8px; margin-top:5px; margin-right: 920px;">
@@ -88,7 +88,7 @@ def body(test_details,tests,status):
 								<i class="fas fa-tasks" style="font-size:30px; color:#808080;"></i>
 							</div>
 							<a class="navbar-brand disabled">
-								<img  class="img-fluid" src="logo.png" style="height: 30px;">
+								<img  class="img-fluid" src="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" style="height: 30px;">
 							</a>					
 						</div>
 					</div>
@@ -172,9 +172,9 @@ def modal_details(tests):
     return "var tests = "+str(v_a)
 
 
-def generate(test_details, tests, report_directory_path, filename):
+def generate(test_details, logo, tests, report_directory_path, filename):
     head_part=head(tests)
-    body_part=body(test_details, tests, overall_test_status(tests))
+    body_part=body(test_details,logo, tests, overall_test_status(tests))
     f = open(report_directory_path + "TestReport_" + filename + ".html", 'w')
     f.write(head_part + body_part)
     f.close()

@@ -25,6 +25,7 @@ class Session:
     @staticmethod
     def start(path="../reports", driver=None, logo=None, session_details=None):
         Session.__test_details=session_details
+        Session.__logo=logo
         Session.__test_details["start_time"]=datetime.now().strftime("%d-%m-%y %H:%M:%S")
         Session.__filename = datetime.now().strftime("%d_%m_%y_%H%M%S")
         Session._report_directory_path = os.path.abspath(path) + "\\" + Session.__filename + "\\"
@@ -33,7 +34,6 @@ class Session:
         #if os.path.exists(Session.__jsonfile_directory_path) is not True:
         #    os.makedirs(Session.__jsonfile_directory_path)
         Session._driver=driver
-        pass
 
     @staticmethod
     def get_test_status(testname):
@@ -58,7 +58,7 @@ class Session:
                   test._logs)
         print(Session.__test_details)
         #ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
-        html_report.generate(Session.__test_details, Session._tests, Session._report_directory_path, Session.__filename)
+        html_report.generate(Session.__test_details, Session.__logo, Session._tests, Session._report_directory_path, Session.__filename)
 
 class Test(Session):
     __temp_verify_id = 0
