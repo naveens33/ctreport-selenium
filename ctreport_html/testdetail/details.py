@@ -13,17 +13,17 @@ def screenshot_section(test):
         elif log["type"] == "error":
             if log["screenshot"] is not None:
                 c += '''
-                    <a href="#{}" target="_blank"> 
-                        <i id="#{}" class="fas fa-image pl-2" style="font-size:30px; color:#cb3434;"></i>
+                    <a id="{}"> 
+                        <i class="fas fa-image pl-2" style="font-size:30px; color:#cb3434;" onclick="createimagemodal('{}','{}')"></i>
                     </a>
-                '''.format(log["screenshot"],log["screenshot"].split('\\')[-1])
+                '''.format(log["id"],log["screenshot"].replace("\\",r"\\"),log["screenshot"].split('\\')[-1])
         elif log["type"] == "verify" or log["type"] == "assert":
             if log["screenshot"] is not None:
                 c += '''
-                     <a href="#{}" target="_blank"> 
-                         <i id="#{}" class="fas fa-image pl-2" style="font-size:30px; color:#cb3434;"></i>
+                     <a id="{}" > 
+                         <i  class="fas fa-image pl-2" style="font-size:30px; color:#cb3434;" onclick="createimagemodal('{}','{}')"></i>
                      </a>
-                 '''.format(log["screenshot"], log["id"])
+                 '''.format(log["id"], log["screenshot"].replace("\\",r"\\"), log["screenshot"].split('\\')[-1])
     return c
 
 def table_content(logs):
@@ -71,13 +71,13 @@ def table_content(logs):
                 '''.format(status[Status.BROKEN][0],status[Status.BROKEN][1],log["error"][:500],log["start-time"])
         elif log["type"] == "verify":
             type_ = '''
-                        <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">{}</a>
+                        <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="" style="text-decoration:none">{}</a>
                     '''
             screenshot_path = log["screenshot"]
             if screenshot_path is None:
                 type_ = "Verification"
             else:
-                type_.format(log["id"], screenshot_path.split('\\')[-1],"Verification")
+                type_ = type_.format(log["id"], screenshot_path.split('\\')[-1],"Verification")
             if log["data-type"] is not "others":
                 e_a_content='''
                     <td style="width: 70%">
@@ -112,13 +112,13 @@ def table_content(logs):
                    '''.format(status[log["status"]][0], status[log["status"]][1], type_, e_a_content, log["start-time"])
         elif log["type"] == "assert":
             type_ = '''
-                        <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">{}</a>
+                        <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="" style="text-decoration:none">{}</a>
                     '''
             screenshot_path = log["screenshot"]
             if screenshot_path is None:
                 type_ = "Assertion"
             else:
-                type_.format(log["id"], screenshot_path.split('\\')[-1], "Assertion")
+                type_=type_.format(log["id"], screenshot_path.split('\\')[-1], "Assertion")
             if log["data-type"] is not "others":
                 e_a_content = '''
                     <td style="width: 70%">

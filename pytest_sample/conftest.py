@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from ctlistener import Session
 from _pytest.runner import runtestprotocol
+from pytest_sample.search import Test_Search
 
 @pytest.fixture(scope="session",autouse=True)
 def driver(request):
@@ -19,18 +20,30 @@ def driver(request):
         "test_execution_name": "Smoke Test",
     }
     Session.start(path="\\report\\",
+                  driver=driver_,
                   logo="D:\\delta_logo.png",
                   session_details=test_details)
+
     def quit():
-        Session.end()
+        #Session.end()
         driver_.quit()
     request.addfinalizer(quit)
     return driver_
-'''
+
 def pytest_runtest_protocol(item, nextitem):
     reports = runtestprotocol(item, nextitem=nextitem)
     for report in reports:
+        if report.when== 'setup':
+            test = item.cls.test
         if report.when == 'call':
-            print("******************",item.name,report.outcome,report.longreprtext)
-    return True
-'''
+            if report.outcome == 'skipped':
+                test.SKIP=True
+            if report.outcome == 'failed':
+                test.broken(report.longrepr.reprcrash.message)
+        if report.when == 'teardown':
+            test.finish()
+    return False
+
+
+def pytest_sessionfinish(session):
+    Session.end()

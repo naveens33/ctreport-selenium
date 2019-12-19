@@ -81,7 +81,7 @@ def content(var):
             html += '<div class="modal-dialog modal-dialog-scrollable ">\
             <div class="modal-content">\
             <div class="modal-header">\
-            <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal" onclick="deletemodal()" style="margin:auto 1rem auto auto; font-size: x-small;">Close</button>\
+            <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal" onclick=deletemodal("modalWindow") style="margin:auto 1rem auto auto; font-size: x-small;">Close</button>\
             </div>\
             <div class="modal-body">'
             +content+'\
@@ -95,8 +95,8 @@ def content(var):
             $("#myModal").html(html);
             $("#modalWindow").modal();
         }
-        function deletemodal() {
-            var element = document.getElementById("modalWindow");
+        function deletemodal(id) {
+            var element = document.getElementById(id);
             element.parentNode.removeChild(element);
         };
     </script>

@@ -1,7 +1,6 @@
 import pytest
 from ctlistener import Test, Priority, Severity
 import traceback
-import time
 
 @pytest.mark.run(order=2)
 def test_do_login(driver):

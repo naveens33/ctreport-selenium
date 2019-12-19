@@ -66,7 +66,7 @@ class Test(Session):
     #test = None
     __temp_test_id = 0
     _result = ""
-    _SKIP = False
+    SKIP = False
 
     def __init__(self,name,id=None,description=None,priority=Priority.HIGH):
         #self.test=test
@@ -86,8 +86,10 @@ class Test(Session):
         self._duration = str(datetime.strptime(self._end_time, '%d-%m-%y %H:%M:%S')
                              - datetime.strptime(self._start_time, '%d-%m-%y %H:%M:%S'))
 
-        if self._SKIP == False and self._result == "":
+        if self.SKIP == False and self._result == "":
             self._result = Status.PASS
+        elif self.SKIP == True:
+            self._result = Status.SKIP
 
         '''
         result = self.test.defaultTestResult()
@@ -162,13 +164,15 @@ class Test(Session):
             while os.path.exists(path):
                 index += 1
                 path = Session._report_directory_path + self._name + "_" + str(index) + ".png"
+            Session._driver.save_screenshot(path)
             return path
         except Exception as err:
             self._logs.append(
                 {"type": "error",
                  "message": "CTReport error: Unable to take screenshot",
                  "error": type(err).__name__,
-                 "start-time": str(datetime.now().strftime("%H:%M:%S"))
+                 "start-time": str(datetime.now().strftime("%H:%M:%S")),
+                 "screenshot":None
                  })
 
     def take_screenshot(self,message=None):

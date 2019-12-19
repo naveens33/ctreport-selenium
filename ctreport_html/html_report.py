@@ -1,6 +1,6 @@
 from ctreport_html import dashboard_view, detail_view, footer_view
 from ctreport_html.charts import status, priority, assertion, verification, timeline
-from ctreport_html.scripts import filter, search, footer,tooltip,toggle,modal,toastr
+from ctreport_html.scripts import filter, search, footer,tooltip,toggle,detailmodal,imagemodal,toastr
 from utility_classes import Severity,Status
 import math
 
@@ -41,7 +41,8 @@ def head(tests):
 		''' + footer.content + '''
         ''' + search.content +'''
         ''' + tooltip.content +'''
-        ''' + modal.content(modal_details(tests)) +'''
+        ''' + detailmodal.content(modal_details(tests)) + '''
+        ''' + imagemodal.content+ '''
         ''' + toastr.content +'''
 		<style>
 		span.extrasmall{
@@ -98,6 +99,7 @@ def body(test_details, logo,tests,status):
 		''' + dashboard_view.content(test_details, status, total_pass_asserts, total_pass_verify, total_fail_asserts, total_fail_verify) + '''
 		''' + detail_view.content(status, tests) + '''
 	    <div id="myModal"></div>
+	    <div id="imagemodal"></div>
 	    ''' + footer_view.content() + '''
 	</body>
 	</html>

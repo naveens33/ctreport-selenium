@@ -56,6 +56,7 @@ def chart(tests):
                     var id = this.data.labels[e._index];
                     console.log(id);
                     display_other_page();
+                    filterSelection("all");
                     document.getElementById(id).scrollIntoView();
                 }
             },
