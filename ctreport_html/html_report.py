@@ -10,7 +10,7 @@ def head(tests):
     <head>
         <title>DIAS Mobile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/style.css" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/4c2a57b0/ctreport_html/style.css" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
 		<link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
