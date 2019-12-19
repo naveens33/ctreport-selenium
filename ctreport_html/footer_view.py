@@ -3,7 +3,7 @@ def content():
     <footer class="footer">
         <div class="bg-light pl-4 p-2">
             <span id="reference">
-            <i class="fas fa-caret-right pr-1" onclick="expandFooter('foot')" style="font-size:20px"></i>
+            <i class="fas fa-caret-right pr-1 pointer" onclick="expandFooter('foot')" style="font-size:20px"></i>
             Reference</span>
         </div>
         <section class="pading test_details">
@@ -58,7 +58,7 @@ def content():
                             </div>
                         </div>
                         <div class="col-4 border-right">						
-                            <p class="pt2">Priority: Applies to sample_test case</p> 
+                            <p class="pt2">Priority: Applies to test case</p> 
                             <div class="row">	
                                 <div class="col-3 align-self-center">
                                 <p>
@@ -67,7 +67,7 @@ def content():
                                 </p>
                                 </div>
                                 <div class="col-9">
-                                    <p class="mb10">Test case on most important features of the application</p>
+                                    <p class="mb10">Test case on the most important features of the application</p>
                                 </div>
                             </div>
                             <div class="row">	
@@ -78,7 +78,7 @@ def content():
                                 </p>
                                 </div>
                                 <div class="col-9">
-                                    <p class="mb10">Test case on features of the application which is next to High priority sample_test cases</p>
+                                    <p class="mb10">Test case on features of the application which is next to High priority test cases</p>
                                 </div>
                             </div>
                             <div class="row">	

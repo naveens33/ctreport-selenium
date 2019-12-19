@@ -37,7 +37,7 @@ def pytest_runtest_protocol(item, nextitem):
             test = item.cls.test
         if report.when == 'call':
             if report.outcome == 'skipped':
-                test.SKIP=True
+                test.skip(report.longrepr[2])
             if report.outcome == 'failed':
                 test.broken(report.longrepr.reprcrash.message)
         if report.when == 'teardown':

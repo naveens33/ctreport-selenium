@@ -7,19 +7,19 @@ def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_
                     <div class="row mt-3">
 						<div class="col-sm-12 col-lg-8">
 							<div class="chart p-2 p-md-4 ">
-								<span class="badge badge-secondary" data-toggle="tooltip pointer" data-placement="right" title="Execution timeline of each sample_test">Timeline</span>
+								<span class="badge badge-secondary pointer" data-toggle="tooltip" data-placement="right" title="Execution timeline of each test">Timeline</span>
 								<br/>
 								<br/>
-								<p class="text-center pb-4 "><b>'''+test_details["duration"]+'''(H:MM:SS)</b> Overall Duration, <b>'''+str(status[4])+'''</b> total sample_test(s)</p>
+								<p class="text-center pb-4 "><b>'''+test_details["duration"]+'''(H:MM:SS)</b> Overall Duration, <b>'''+str(status[4])+'''</b> total test(s)</p>
 								<canvas id="timelinechart" width="550" height="156" ></canvas>
 							</div>
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <div class="chart p-2 p-md-4">
-								<span class="badge badge-secondary"  data-toggle="tooltip pointer" data-placement="right" title="Test execution status breakdown">Status</span>
+								<span class="badge badge-secondary pointer"  data-toggle="tooltip" data-placement="right" title="Test execution status breakdown">Status</span>
 								<!--<br/>
 								<br/>-->
-								<p class="text-center pb-0 pb-md-1 pb-sm-1 pb-lg-1 "> <b>'''+str(status[0])+'''</b> sample_test(s) passed, <b>'''+str(status[1])+'''</b> failed, <b>'''+str(status[2])+'''</b> skipped, <b>'''+str(status[3])+'''</b> broken</p>   
+								<p class="text-center pb-0 pb-md-1 pb-sm-1 pb-lg-1 "> <b>'''+str(status[0])+'''</b> test(s) passed, <b>'''+str(status[1])+'''</b> failed, <b>'''+str(status[2])+'''</b> skipped, <b>'''+str(status[3])+'''</b> broken</p>   
                                 <div style="position: relative">
 									<p class="font-weight-bold" style="color:#28a745; position:absolute; top: 92px; left: 100px; font-size: 50px;" >'''+str(status[5])+'''%</p>
 									<canvas id="statuschart" height="187" ></canvas>
@@ -32,16 +32,16 @@ def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_
                     <div class="row mt-3">
 						<div class="col-sm-12 col-lg-4">
 							<div class="chart p-2 p-md-4 ">
-								<span class="badge badge-secondary"  data-toggle="tooltip pointer" data-placement="right" title="Test execution status breakdown on Priority of sample_test cases">Priority</span>
+								<span class="badge badge-secondary pointer"  data-toggle="tooltip" data-placement="right" title="Test execution status breakdown on Priority of test cases">Priority</span>
 								<br/>
 								<br/>
-                                <p class="text-center  pb-0 pb-md-2 pb-sm-2 pb-lg-4 "> <b>'''+str(status[4])+'''</b> total sample_test(s)</p>
+                                <p class="text-center  pb-0 pb-md-2 pb-sm-2 pb-lg-4 "> <b>'''+str(status[4])+'''</b> total test(s)</p>
                                 <canvas id="prioritychart" height="187" ></canvas>
 							</div>
                         </div>
                         <div class="col-sm-12 col-lg-4">
                             <div class="chart p-2 p-md-4">
-								<span class="badge badge-secondary" data-toggle="tooltip pointer" data-placement="right" title="Assertion status breakdown on Severity of assertion steps">Assertion</span>
+								<span class="badge badge-secondary pointer" data-toggle="tooltip" data-placement="right" title="Assertion status breakdown">Assertion</span>
 								<br/>
 								<br/>
 								<p class="text-center pb-0 pb-md-2 pb-sm-2 pb-lg-4 "> <b>'''+str(total_pass_asserts)+'''</b> assertion(s) passed, <b>'''+str(total_fail_asserts)+'''</b> assertion(s) failed</p>   
@@ -50,7 +50,7 @@ def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_
                         </div>
 						<div class="col-sm-12 col-lg-4">
                             <div class="chart p-2 p-md-4">
-								<span class="badge badge-secondary" data-toggle="tooltip pointer" data-placement="right" title="Verification status breakdown on Severity of verification steps">Verifications</span>
+								<span class="badge badge-secondary pointer" data-toggle="tooltip" data-placement="right" title="Verification status breakdown on Severity of verification steps">Verifications</span>
 								<br/>
 								<br/>
 								<p class="text-center pb-0 pb-md-2 pb-sm-2 pb-lg-4 "> <b>'''+str(total_pass_verify)+'''</b> verification(s) passed, <b>'''+str(total_fail_verify)+'''</b> verification(s) failed</p>   

@@ -7,7 +7,7 @@ content='''
           } else {
             x.style.display = "none";
           }
-          var x = document.getElementById("sample_test-view");
+          var x = document.getElementById("test-view");
           if (x.style.display === "none") {
             x.style.display = "block";
           } else {

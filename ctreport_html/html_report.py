@@ -8,7 +8,7 @@ def head(tests):
     content = '''
     <html>
     <head>
-        <title>DIAS Mobile</title>
+        <title>Test Report</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/4c2a57b0/ctreport_html/style.css" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
@@ -21,6 +21,7 @@ def head(tests):
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+		<link rel = "icon" href =  "https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" type = "image/x-icon"> 
 		<script type = 'text/javascript'>
             window.onload = function() {
                 ''' + \
@@ -85,7 +86,7 @@ def body(test_details, logo,tests,status):
 							<div id="graph" onclick="display_other_page()" class="cursor-pointer" style="display: none; padding-right:20px; margin-top:6px;" data-toggle="tooltip" data-placement="bottom" title="Click to toggle dashboard">
 								<i class="fa fa-bar-chart" style="font-size:30px; color:#808080;"></i>
 							</div>
-							<div id="testdetails" class="cursor-pointer" style="padding-right:20px; margin-top:6px;" onclick="display_other_page()" data-toggle="tooltip" data-placement="bottom" title="Click to toggle sample_test details">
+							<div id="testdetails" class="cursor-pointer" style="padding-right:20px; margin-top:6px;" onclick="display_other_page()" data-toggle="tooltip" data-placement="bottom" title="Click to toggle test details">
 								<i class="fas fa-tasks" style="font-size:30px; color:#808080;"></i>
 							</div>
 							<a class="navbar-brand disabled">

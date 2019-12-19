@@ -1,8 +1,8 @@
 """
-    Priority: Applies to sample_test case
+    Priority: Applies to test case
     ------------------------------
     High - Test case on most important features of the application
-    Medium - Test case on features of the application which is next to High priority sample_test cases
+    Medium - Test case on features of the application which is next to High priority test cases
     Low - Test case on features of the application which is considered to be executed rarely
 
     Status: Test status after execution

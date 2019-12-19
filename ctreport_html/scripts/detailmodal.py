@@ -81,7 +81,7 @@ def content(var):
             html += '<div class="modal-dialog modal-dialog-scrollable ">\
             <div class="modal-content">\
             <div class="modal-header">\
-            <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal" onclick=deletemodal("modalWindow") style="margin:auto 1rem auto auto; font-size: x-small;">Close</button>\
+            <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal" onclick=deletemodal("modalWindow") style="margin:auto 1rem auto auto; font-size: smaller;">Close</button>\
             </div>\
             <div class="modal-body">'
             +content+'\

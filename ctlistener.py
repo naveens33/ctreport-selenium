@@ -66,7 +66,6 @@ class Test(Session):
     #test = None
     __temp_test_id = 0
     _result = ""
-    SKIP = False
 
     def __init__(self,name,id=None,description=None,priority=Priority.HIGH):
         #self.test=test
@@ -86,10 +85,8 @@ class Test(Session):
         self._duration = str(datetime.strptime(self._end_time, '%d-%m-%y %H:%M:%S')
                              - datetime.strptime(self._start_time, '%d-%m-%y %H:%M:%S'))
 
-        if self.SKIP == False and self._result == "":
+        if self._result == "":
             self._result = Status.PASS
-        elif self.SKIP == True:
-            self._result = Status.SKIP
 
         '''
         result = self.test.defaultTestResult()
@@ -151,21 +148,32 @@ class Test(Session):
     def broken(self,*err):
         self._result = Status.BROKEN
         self._logs.append({
-            "type": "broken",
+            "type": Status.BROKEN,
             "error": str(err),
             "start-time": str(datetime.now().strftime("%H:%M:%S"))
         })
         self._result = Status.BROKEN
 
+    def skip(self,message):
+        self._result = Status.BROKEN
+        self._logs.append({
+            "type": Status.SKIP,
+            "message": message,
+            "start-time": str(datetime.now().strftime("%H:%M:%S"))
+        })
+        self._result = Status.SKIP
+
     def __take_failed_screenshot(self):
         try:
             index = 1
-            path = Session._report_directory_path + self._name + "_" + str(index) + ".png"
+            filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index)+".png"
+            path = Session._report_directory_path + filename
             while os.path.exists(path):
                 index += 1
-                path = Session._report_directory_path + self._name + "_" + str(index) + ".png"
+                filename = ''.join(e for e in self._name if e.isalnum())+ "_" + str(index)+".png"
+                path = Session._report_directory_path + filename
             Session._driver.save_screenshot(path)
-            return path
+            return filename
         except Exception as err:
             self._logs.append(
                 {"type": "error",
@@ -177,15 +185,17 @@ class Test(Session):
 
     def take_screenshot(self,message=None):
         index = 1
-        path = Session._report_directory_path + self._name + "_" + str(index) + ".png"
+        filename=''.join(e for e in self._name if e.isalnum()) + "_" + str(index)+".png"
+        path = Session._report_directory_path + filename
         while os.path.exists(path):
             index += 1
-            path = Session._report_directory_path + self._name + "_" + str(index) + ".png"
+            filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
+            path = Session._report_directory_path + filename
         Session.__driver.save_screenshot(path)
         self._logs.append(
             {"type": "screenshot",
              "message": message,
-             "path": path,
+             "path": filename,
              "start-time": str(datetime.now().strftime("%H:%M:%S"))
              })
 
