@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
   name = 'ctreport_selenium',
-  version = '0.1',
+  version = '0.4',
   author='Naveen.S',
   author_email='naveensagayaselvaraj@gmail.com',
   license='MIT',
