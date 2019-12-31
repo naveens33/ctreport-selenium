@@ -1,4 +1,5 @@
-from distutils.core import setup
+from setuptools import setup
+
 setup(
   name = 'ctreport-selenium',         # How you named your package folder (MyLib)
   packages = ['ctreport-selenium'],   # Chose the same as "name"
@@ -8,7 +9,7 @@ setup(
   author = 'Naveen.S',                   # Type in your name
   author_email = 'naveensagayaselvaraj@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/naveens33/ctreport-selenium',   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/naveens33/ctreport-selenium/archive/0.1.tar.gz',    # I explain this later on
   keywords = ['Report', 'Selenium', 'CTReport', 'result', 'testing'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
           'datetime',
