@@ -23,7 +23,7 @@ class Session:
     '''
     __test_details = {}
     @staticmethod
-    def start(path="../reports", driver=None, logo=None, session_details=None):
+    def start(path=os.path.abspath('.')+"/report/", driver=None, logo=None, session_details=None):
         Session.__test_details=session_details
         Session.__logo=logo
         Session.__test_details["start_time"]=datetime.now().strftime("%d-%m-%y %H:%M:%S")

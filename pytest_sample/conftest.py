@@ -2,7 +2,6 @@ import pytest
 from selenium import webdriver
 from ctlistener import Session
 from _pytest.runner import runtestprotocol
-from pytest_sample.search import Test_Search
 
 @pytest.fixture(scope="session",autouse=True)
 def driver(request):
@@ -19,8 +18,7 @@ def driver(request):
         "os_version": "10",
         "test_execution_name": "Smoke Test",
     }
-    Session.start(path="\\report\\",
-                  driver=driver_,
+    Session.start(driver=driver_,
                   logo="D:\\delta_logo.png",
                   session_details=test_details)
 
