@@ -1,5 +1,5 @@
 import pytest
-from ctlistener import Test, Priority
+from ctreport_selenium.ctlistener import Test, Priority
 import traceback
 
 @pytest.mark.run(order=2)

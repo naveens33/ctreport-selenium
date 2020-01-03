@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from ctlistener import Session
+from ctreport_selenium.ctlistener import Session
 from _pytest.runner import runtestprotocol
 
 @pytest.fixture(scope="session",autouse=True)

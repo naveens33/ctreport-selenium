@@ -1,6 +1,6 @@
 import pytest
 from selenium.webdriver.common.keys import Keys
-from ctlistener import Test, Priority, Severity
+from ctreport_selenium.ctlistener import Test, Priority, Severity
 
 class Test_Search():
 
