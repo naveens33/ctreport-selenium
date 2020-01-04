@@ -65,6 +65,7 @@ class Test(Session):
     #test = None
     __temp_test_id = 0
     _result = ""
+    NOTBROKEN=False
 
     def __init__(self,name,id=None,description=None,priority=Priority.HIGH):
         #self.test=test
@@ -145,13 +146,16 @@ class Test(Session):
         self._result = Status.FAIL
 
     def broken(self,*err):
-        self._result = Status.BROKEN
-        self._logs.append({
-            "type": Status.BROKEN,
-            "error": str(err),
-            "start-time": str(datetime.now().strftime("%H:%M:%S"))
-        })
-        self._result = Status.BROKEN
+        if Test.NOTBROKEN==True:
+            pass
+        else:
+            self._result = Status.BROKEN
+            self._logs.append({
+                "type": Status.BROKEN,
+                "error": str(err),
+                "start-time": str(datetime.now().strftime("%H:%M:%S"))
+            })
+            self._result = Status.BROKEN
 
     def skip(self,message):
         self._result = Status.BROKEN
@@ -261,8 +265,10 @@ class Test(Session):
         else:
             v["screenshot"] = None
         self._logs.append(v)
-        #if v["status"]==Status.FAIL:
-        #    self.test.fail("Assertion fail")
+        if v["status"]==Status.FAIL:
+            Test.NOTBROKEN=True
+            raise AssertionError
+
 
     def verify_are_equal(self, actual, expected, description=None, severity=Severity.BLOCKER, onfail_screenshot=False):
         v={"id":"#v"+str(Test.__temp_verify_id),
