@@ -20,10 +20,7 @@ def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_
 								<!--<br/>
 								<br/>-->
 								<p class="text-center pb-0 pb-md-1 pb-sm-1 pb-lg-1 "> <b>'''+str(status[0])+'''</b> test(s) passed, <b>'''+str(status[1])+'''</b> failed, <b>'''+str(status[2])+'''</b> skipped, <b>'''+str(status[3])+'''</b> broken</p>   
-                                <div style="position: relative">
-									<p class="font-weight-bold" style="color:#28a745; position:absolute; top: 92px; left: 100px; font-size: 50px;" >'''+str(status[5])+'''%</p>
-									<canvas id="statuschart" height="187" ></canvas>
-								</div>
+                                <canvas id="statuschart" height="187" ></canvas>
 							</div>
                         </div>
                     </div>

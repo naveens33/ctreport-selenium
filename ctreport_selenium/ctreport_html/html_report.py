@@ -23,11 +23,11 @@ def head(tests):
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 		<link rel = "icon" href =  "https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" type = "image/x-icon"> 
 		<script type = 'text/javascript'>
+		    ''' + \
+              status.chart(overall_test_status(tests)) + '''
             window.onload = function() {
                 ''' + \
               timeline.chart(tests) + '''
-                     ''' + \
-              status.chart(overall_test_status(tests)) + '''
                     ''' + \
               priority.chart(tests) + '''
                     ''' + \
