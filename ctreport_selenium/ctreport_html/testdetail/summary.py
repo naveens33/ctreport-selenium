@@ -4,8 +4,8 @@ from ctreport_selenium.utility_classes import Status
 def search_filter(status_):
     c='''
     <div style="display:flex">
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by #id or name..." style="font-size:15px; max-height:32px; max-width:100%; width:300px">
-        <div id="myBtnContainer" style="text-align: right; padding: 3px 0px 0px 40px;">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by #id or name..." style="font-size:15px; max-height:32px; max-width:100%;">
+        <div id="myBtnContainer" style="margin-left: auto;">
             <span class="font-weight-normal small" style="padding-right:15px">Filter By:</span>
             <i class="fa fa-sync-alt pointer" style="font-size: 18px; color:#696969" onclick="filterSelection('all')" data-toggle="tooltip" data-placement="top" title="Show all({})"></i>
             <i class="{} passicon pointer" style="{}" onclick="filterSelection('passed')" data-toggle="tooltip" data-placement="top" title="Passed({})"></i>

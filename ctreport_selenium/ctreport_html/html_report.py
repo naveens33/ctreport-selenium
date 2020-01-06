@@ -74,8 +74,8 @@ def body(test_details, logo,tests,status):
 					<a class="navbar-brand disabled">
 						<img  class="img-fluid" src=''' + logo + ''' style="height: 25px;">
 					</a>
-					<div>
-						<div class="badge badge-light" style="font-size: 100%; padding:8px; margin-top:5px; margin-right: 920px;  font-size: larger;">
+                    <div style="margin-right: auto;">
+						<div class="badge badge-light" style="font-size: large; padding:8px; margin-top:5px;">
 							<span >''' + test_details["test_execution_name"] + '''</span>
 							<span >''' + test_details["application_name"] +'''</span>
 						</div>
