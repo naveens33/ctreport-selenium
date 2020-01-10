@@ -5,7 +5,7 @@ def chart(count):
             new Chart(document.getElementById("verificationchart"), {
             type: 'bar',
             data: {
-              labels: ["High", "Medium", "Low"],
+              labels: '''+ label + ''',
               datasets: [
                 {
                   label: "Passed",
