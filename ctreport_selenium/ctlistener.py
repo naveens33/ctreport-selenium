@@ -1,12 +1,13 @@
 from datetime import datetime
-from ctreport_selenium.utility_classes import Priority,Severity,Status
+from ctreport_selenium.utility_classes import Priority, Severity, Status
 from ctreport_selenium.ctreport_html import html_report
 import os
+
 
 class Session:
     _tests = []
     _report_directory_path = ""
-    #_jsonfile_directory_path = ""
+    # _jsonfile_directory_path = ""
     _driver = None
     '''
     session_details = {
@@ -21,18 +22,20 @@ class Session:
     }
     '''
     __test_details = {}
+
     @staticmethod
-    def start(path=os.path.abspath('.')+"/report/", driver=None, logo=None, session_details=None):
-        Session.__test_details=session_details
-        Session.__logo=logo
-        Session.__test_details["start_time"]=datetime.now().strftime("%d-%m-%y %H:%M:%S")
+    def start(test_name, path=os.path.abspath('.') + "/report/", driver=None, logo=None, session_details=None):
+        Session.__test_details = session_details
+        Session.__logo = logo
+        Session.__test_details["test_execution_name"] = test_name
+        Session.__test_details["start_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
         Session.__filename = datetime.now().strftime("%d_%m_%y_%H%M%S")
         Session._report_directory_path = os.path.abspath(path) + "\\" + Session.__filename + "\\"
-        #Session.__jsonfile_directory_path = os.path.abspath(path) + "\\jsonfiles\\"
+        # Session.__jsonfile_directory_path = os.path.abspath(path) + "\\jsonfiles\\"
         os.makedirs(Session._report_directory_path)
-        #if os.path.exists(Session.__jsonfile_directory_path) is not True:
+        # if os.path.exists(Session.__jsonfile_directory_path) is not True:
         #    os.makedirs(Session.__jsonfile_directory_path)
-        Session._driver=driver
+        Session._driver = driver
 
     @staticmethod
     def get_test_status(testname):
@@ -42,36 +45,45 @@ class Session:
 
     @staticmethod
     def end():
-        Session.__test_details["end_time"]=datetime.now().strftime("%d-%m-%y %H:%M:%S")
-        Session.__test_details["duration"] = str(datetime.strptime(Session.__test_details["end_time"], '%d-%m-%y %H:%M:%S')
-                                                 - datetime.strptime(Session.__test_details["start_time"], '%d-%m-%y %H:%M:%S'))
-        for test in Session._tests:
-            print(test._name,
-                  test._id,
-                  test._description,
-                  test._start_time,
-                  test._end_time,
-                  test._duration,
-                  test._result,
-                  test._priority,
-                  test._logs)
-        print(Session.__test_details)
-        #ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
-        html_report.generate(Session.__test_details, Session.__logo, Session._tests, Session._report_directory_path, Session.__filename)
+        if len(Session._tests) != 0:
+            Session.__test_details["end_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
+            Session.__test_details["duration"] = str(
+                datetime.strptime(Session.__test_details["end_time"], '%d-%m-%y %H:%M:%S')
+                - datetime.strptime(Session.__test_details["start_time"], '%d-%m-%y %H:%M:%S'))
+            '''
+            for test in Session._tests:
+                print(test._name,
+                      test._id,
+                      test._description,
+                      test._start_time,
+                      test._end_time,
+                      test._duration,
+                      test._result,
+                      test._priority,
+                      test._logs)
+            print(Session.__test_details)
+            #ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
+            '''
+            html_report.generate(Session.__test_details, Session.__logo, Session._tests, Session._report_directory_path,
+                                 Session.__filename)
+        else:
+            print("Failed before test starts, No test found.")
+
 
 class Test(Session):
     __temp_verify_id = 0
     __temp_assert_id = 0
-    #test = None
+    __temp_error_id = 0
+    # test = None
     __temp_test_id = 0
     _result = ""
-    NOTBROKEN=False
+    NOTBROKEN = False
 
-    def __init__(self,name,id=None,description=None,priority=Priority.HIGH):
-        #self.test=test
+    def __init__(self, name, id=None, description=None, priority=Priority.HIGH):
+        # self.test=test
         self._name = name
         if id is not None:
-           self._id = "#" + str(id)
+            self._id = "#" + str(id)
         else:
             Test.__temp_test_id += 1
             self._id = "#" + str(Test.__temp_test_id)
@@ -112,18 +124,21 @@ class Test(Session):
         '''
         Session._tests.append(self)
 
-    def log(self, message):
+    def log(self, *message):
+        message = ' '.join([str(elem) for elem in message])
         self._logs.append({
             "type": "log",
             "message": message,
             "start-time": datetime.now().strftime("%H:%M:%S")
         })
 
-    def error(self, message,err=None, takesheetshot = False):
+    def error(self, message, err=None, takesheetshot=False):
+        Test.__temp_error_id += 1
         path = None
         if takesheetshot:
             path = self.__take_failed_screenshot()
         self._logs.append({
+            "id": "#e" + str(Test.__temp_error_id),
             "type": "error",
             "message": message,
             "error": type(err).__name__,
@@ -132,21 +147,8 @@ class Test(Session):
         })
         self._result = Status.FAIL
 
-    def error(self, message,err=None, takesheetshot = False):
-        path = None
-        if takesheetshot:
-            path = self.__take_failed_screenshot()
-        self._logs.append({
-            "type": "error",
-            "message": message,
-            "error": type(err).__name__,
-            "screenshot": path,
-            "start-time": str(datetime.now().strftime("%H:%M:%S"))
-        })
-        self._result = Status.FAIL
-
-    def broken(self,*err):
-        if Test.NOTBROKEN==True:
+    def broken(self, *err):
+        if Test.NOTBROKEN == True:
             pass
         else:
             self._result = Status.BROKEN
@@ -157,7 +159,7 @@ class Test(Session):
             })
             self._result = Status.BROKEN
 
-    def skip(self,message):
+    def skip(self, message):
         self._result = Status.BROKEN
         self._logs.append({
             "type": Status.SKIP,
@@ -169,11 +171,11 @@ class Test(Session):
     def __take_failed_screenshot(self):
         try:
             index = 1
-            filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index)+".png"
+            filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
             path = Session._report_directory_path + filename
             while os.path.exists(path):
                 index += 1
-                filename = ''.join(e for e in self._name if e.isalnum())+ "_" + str(index)+".png"
+                filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
                 path = Session._report_directory_path + filename
             Session._driver.save_screenshot(path)
             return filename
@@ -183,12 +185,12 @@ class Test(Session):
                  "message": "CTReport error: Unable to take screenshot",
                  "error": type(err).__name__,
                  "start-time": str(datetime.now().strftime("%H:%M:%S")),
-                 "screenshot":None
+                 "screenshot": None
                  })
 
-    def take_screenshot(self,message=None):
+    def take_screenshot(self, message=None):
         index = 1
-        filename=''.join(e for e in self._name if e.isalnum()) + "_" + str(index)+".png"
+        filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
         path = Session._report_directory_path + filename
         while os.path.exists(path):
             index += 1
@@ -202,9 +204,9 @@ class Test(Session):
              "start-time": str(datetime.now().strftime("%H:%M:%S"))
              })
 
-    def assert_are_equal(self, actual, expected, description=None,onfail_screenshot=False):
-        v = {"id": "#a"+str(Test.__temp_assert_id),
-            "type": "assert",
+    def assert_are_equal(self, actual, expected, description=None, onfail_screenshot=False):
+        v = {"id": "#a" + str(Test.__temp_assert_id),
+             "type": "assert",
              "actual": "",
              "expected": "",
              "merge": "",
@@ -228,7 +230,7 @@ class Test(Session):
                 v["data-type"] = "dict"
                 details = self.__verify_dict(actual, expected)
                 v["merge"] = details[1]
-                if details[0]== False:
+                if details[0] == False:
                     v["status"] = Status.FAIL
                     v["message"] = description
                     self._result = Status.FAIL
@@ -245,7 +247,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             elif type(actual) == tuple:
                 v["data-type"] = "tuple"
-                v["merge"] = [list(expected),list(actual)]
+                v["merge"] = [list(expected), list(actual)]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
                     v["message"] = description
@@ -265,56 +267,55 @@ class Test(Session):
         else:
             v["screenshot"] = None
         self._logs.append(v)
-        if v["status"]==Status.FAIL:
-            Test.NOTBROKEN=True
+        if v["status"] == Status.FAIL:
+            Test.NOTBROKEN = True
             raise AssertionError
 
-
-    def verify_are_equal(self, actual, expected, description=None, severity=Severity.BLOCKER, onfail_screenshot=False):
-        v={"id":"#v"+str(Test.__temp_verify_id),
-            "type": "verify",
-           "actual": "",
-           "expected": "",
-           "merge": "",
-           "status": "",
-           "message": "",
-           "screenshot": "",
-           "severity":severity,
-           "data-type":"",
-           "start-time": str(datetime.now().strftime("%H:%M:%S"))}
-        Test.__temp_verify_id+=1
-        if type(actual)!=type(expected):
-            v["actual"]=actual
+    def verify_are_equal(self, actual, expected, description=None, severity=Severity.MAJOR, onfail_screenshot=False):
+        v = {"id": "#v" + str(Test.__temp_verify_id),
+             "type": "verify",
+             "actual": "",
+             "expected": "",
+             "merge": "",
+             "status": "",
+             "message": "",
+             "screenshot": "",
+             "severity": severity,
+             "data-type": "",
+             "start-time": str(datetime.now().strftime("%H:%M:%S"))}
+        Test.__temp_verify_id += 1
+        if type(actual) != type(expected):
+            v["actual"] = actual
             v["expected"] = expected
-            v["status"]=Status.FAIL
+            v["status"] = Status.FAIL
             v["message"] = "Cannot verify objects of different type"" \
-            ""  actual: "+type(actual)+" expected: "+type(expected)
+            ""  actual: " + type(actual) + " expected: " + type(expected)
             self._result = Status.FAIL
         else:
             v["actual"] = actual
             v["expected"] = expected
-            if type(actual)== dict:
-                v["data-type"]="dict"
-                details=self.__verify_dict(actual, expected)
+            if type(actual) == dict:
+                v["data-type"] = "dict"
+                details = self.__verify_dict(actual, expected)
                 v["merge"] = details[1]
-                if details[0]==False:
+                if details[0] == False:
                     v["status"] = Status.FAIL
-                    v["message"]=description
+                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
-            elif type(actual)==list:
+            elif type(actual) == list:
                 v["data-type"] = "list"
-                v["merge"] = [expected,actual]
+                v["merge"] = [expected, actual]
                 if not self.__verify_list(actual, expected):
                     v["status"] = Status.FAIL
                     v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
-            elif type(actual)==tuple:
+            elif type(actual) == tuple:
                 v["data-type"] = "tuple"
-                v["merge"] = [list(expected),list(actual)]
+                v["merge"] = [list(expected), list(actual)]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
                     v["message"] = description
@@ -323,7 +324,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             else:
                 v["data-type"] = "others"
-                if actual!=expected:
+                if actual != expected:
                     v["status"] = Status.FAIL
                     v["message"] = description
                     self._result = Status.FAIL
@@ -332,7 +333,7 @@ class Test(Session):
         if onfail_screenshot and v["status"] == Status.FAIL:
             v["screenshot"] = self.__take_failed_screenshot()
         else:
-            v["screenshot"]=None
+            v["screenshot"] = None
         self._logs.append(v)
 
     def __verify_dict(self, actual, expected):
@@ -362,15 +363,15 @@ class Test(Session):
     def __verify_list(self, actual, expected):
         actual.sort()
         expected.sort()
-        if actual!=expected:
+        if actual != expected:
             return False
         return True
 
     def __verify_tuple(self, actual, expected):
-        actual=list(actual)
-        expected=list(expected)
+        actual = list(actual)
+        expected = list(expected)
         actual.sort()
         expected.sort()
-        if actual!=expected:
+        if actual != expected:
             return False
         return True

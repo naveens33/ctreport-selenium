@@ -1,11 +1,12 @@
 from ctreport_selenium.utility_classes import Severity
 def chart(count):
-    label=[Severity.BLOCKER,Severity.CRITICAL,Severity.MAJOR,Severity.MINOR]
+    label = [Severity.BLOCKER.capitalize(), Severity.CRITICAL.capitalize(), Severity.MAJOR.capitalize(),
+             Severity.MINOR.capitalize()]
     content = '''
             new Chart(document.getElementById("verificationchart"), {
             type: 'bar',
             data: {
-              labels: '''+ label + ''',
+              labels: '''+ str(label) + ''',
               datasets: [
                 {
                   label: "Passed",

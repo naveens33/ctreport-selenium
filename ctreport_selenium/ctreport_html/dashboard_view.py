@@ -1,4 +1,16 @@
 def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_asserts,total_fail_verify):
+    session_details = ''''''
+    if test_details is not None:
+        for key in test_details.keys():
+            if key == "start_time" or key == "end_time" or key == "duration" or key == "test_execution_name":
+                pass
+            else:
+                session_details += '''
+                       <tr>
+                           <td>{}</td>
+                           <td>{}</td>
+                       </tr>
+                   '''.format(key, test_details[key])
     c='''
     <!--Dashboard-->
     <div id="dashboard" class="wrapper">
@@ -66,30 +78,7 @@ def content(test_details,status,total_pass_asserts,total_pass_verify,total_fail_
 									<div class="box-table">
 										<table class="table table_ text-uppercase">
 											<tbody>
-												<tr>
-													<td>Test Name</td>
-													<td>'''+test_details["test_execution_name"]+'''</td>
-												</tr>
-												<tr>
-													<td>Application Name</td>
-													<td>'''+test_details["application_name"]+'''</td>
-												</tr>
-												<tr>
-													<td>Owner</td>
-													<td>'''+test_details["owner"]+'''</td>
-												</tr>
-												<tr>
-													<td>Environment</td>
-													<td>'''+test_details["environment"]+'''</td>
-												</tr>
-												<tr>
-													<td>Browser</td>
-													<td>'''+test_details["browser_name"]+''' '''+test_details["browser_version"]+'''</td>
-												</tr>
-												<tr>
-													<td>OS</td>
-													<td>'''+test_details["os"]+''' '''+test_details["os_version"]+'''</td>
-												</tr>
+                                                '''+session_details+'''
 											</tbody>
 										</table>
 									</div>

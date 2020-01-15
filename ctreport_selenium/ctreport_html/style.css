@@ -34,6 +34,10 @@ html,body{
   overflow: auto; /* Enable scroll if needed */
 }
 
+.modal .modal-dialog{
+    max-width: 50%;
+}
+
 /* Modal Content (image) */
 .modal-content {
   margin: auto;
@@ -93,7 +97,6 @@ html,body{
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
   .modal-content {
-    width: fit-content;
   }
 }
 

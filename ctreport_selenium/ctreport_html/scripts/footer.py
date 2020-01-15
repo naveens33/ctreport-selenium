@@ -1,4 +1,4 @@
-content='''
+content = '''
     <script>
     function showFooter(){
             footer=document.getElementById("footer");
@@ -34,7 +34,7 @@ content='''
                     w3AddClass(i, "fas fa-caret-right");
                 }
             }
-            
+
         }
         function expandFunction(id){
             div = document.getElementById(id);

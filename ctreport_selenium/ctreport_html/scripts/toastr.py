@@ -1,4 +1,4 @@
-content='''
+content = '''
 <script>
 		function toast_message(status) {
 		console.log("Hello");

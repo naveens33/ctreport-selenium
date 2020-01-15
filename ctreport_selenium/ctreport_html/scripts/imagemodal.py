@@ -1,4 +1,4 @@
-content='''
+content = '''
     <script>
         function createimagemodal(path,cap) {
             var html = '<div id="modalWindow1" class="modal" data-keyboard="false" data-backdrop="static">\

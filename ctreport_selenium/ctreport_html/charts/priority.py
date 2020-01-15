@@ -1,41 +1,42 @@
-from ctreport_selenium.utility_classes import Status,Priority
+from ctreport_selenium.utility_classes import Status, Priority
+
 
 def chart(tests):
-    pass_=[0,0,0]
-    fail_=[0,0,0]
-    skip_=[0,0,0]
+    pass_ = [0, 0, 0]
+    fail_ = [0, 0, 0]
+    skip_ = [0, 0, 0]
     broken_ = [0, 0, 0]
     for test in tests:
-        if test._result==Status.PASS:
-            if test._priority==Priority.HIGH:
-                pass_[0]+=1
-            elif test._priority==Priority.MEDIUM:
+        if test._result == Status.PASS:
+            if test._priority == Priority.HIGH:
+                pass_[0] += 1
+            elif test._priority == Priority.MEDIUM:
                 pass_[1] += 1
             else:
                 pass_[2] += 1
         elif test._result == Status.FAIL:
-            if test._priority==Priority.HIGH:
-                fail_[0]+=1
-            elif test._priority==Priority.MEDIUM:
+            if test._priority == Priority.HIGH:
+                fail_[0] += 1
+            elif test._priority == Priority.MEDIUM:
                 fail_[1] += 1
             else:
                 fail_[2] += 1
         elif test._result == Status.SKIP:
-            if test._priority==Priority.HIGH:
-                skip_[0]+=1
-            elif test._priority==Priority.MEDIUM:
+            if test._priority == Priority.HIGH:
+                skip_[0] += 1
+            elif test._priority == Priority.MEDIUM:
                 skip_[1] += 1
             else:
                 skip_[2] += 1
         else:
-            if test._priority==Priority.HIGH:
-                broken_[0]+=1
-            elif test._priority==Priority.MEDIUM:
+            if test._priority == Priority.HIGH:
+                broken_[0] += 1
+            elif test._priority == Priority.MEDIUM:
                 broken_[1] += 1
             else:
                 broken_[2] += 1
 
-    content='''
+    content = '''
         var prioritychart=new Chart(document.getElementById("prioritychart"), {
         type: 'bar',
         data: {
@@ -43,19 +44,19 @@ def chart(tests):
             datasets: [{
                 label: "Passed",
                 backgroundColor: "#00AF00",
-                data: '''+str(pass_)+'''
+                data: ''' + str(pass_) + '''
             }, {
                 label: "Failed",
                 backgroundColor: "#F7464A",
-                data: '''+str(fail_)+'''
+                data: ''' + str(fail_) + '''
             },{
                 label: "Skipped",
                 backgroundColor: "#1E90FF",
-                data: '''+str(skip_)+'''
+                data: ''' + str(skip_) + '''
             },{
                 label: "Broken",
                 backgroundColor: "#aaa",
-                data: '''+str(broken_)+'''
+                data: ''' + str(broken_) + '''
             }
             ]
         },

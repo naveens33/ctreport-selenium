@@ -1,5 +1,5 @@
 def chart(status):
-    content='''
+    content = '''
         var statuschart=new Chart(document.getElementById("statuschart"), {
             type: 'doughnut',
             data: {
@@ -7,8 +7,8 @@ def chart(status):
                 datasets: [{
                     label: "Population (millions)",
                     backgroundColor: ["#00AF00", "#F7464A","#1E90FF","#aaa"],
-                      data: ['''+str(status[0])+''','''+str(status[1])+''','''+ \
-            str(status[2])+''','''+str(status[3])+''']
+                      data: [''' + str(status[0]) + ''',''' + str(status[1]) + ''',''' + \
+              str(status[2]) + ''',''' + str(status[3]) + ''']
                 }]	
             },
             options: {
@@ -42,8 +42,8 @@ def chart(status):
             },
         });
     '''
-    #return content
-    content1='''
+    # return content
+    content1 = '''
     $(function(){
 			Chart.pluginService.register({
 			  beforeDraw: function(chart) {
@@ -85,8 +85,8 @@ def chart(status):
 					datasets: [{
 						label: "Population (millions)",
 						backgroundColor: ["#00AF00", "#F7464A","#1E90FF","#aaa"],
-						  data: ['''+str(status[0])+''','''+str(status[1])+''','''+ \
-            str(status[2])+''','''+str(status[3])+'''],
+						  data: [''' + str(status[0]) + ''',''' + str(status[1]) + ''',''' + \
+               str(status[2]) + ''',''' + str(status[3]) + '''],
 					}]	
 				},
 		  options: {
@@ -120,4 +120,4 @@ def chart(status):
 
 				});
     '''
-    return  content1
+    return content1

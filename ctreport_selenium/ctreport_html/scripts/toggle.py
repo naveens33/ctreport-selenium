@@ -1,4 +1,4 @@
-content='''
+content = '''
     <script>
         function display_other_page() {
           var x = document.getElementById("testdetails");
@@ -28,4 +28,3 @@ content='''
         }		
     </script>
 '''
-

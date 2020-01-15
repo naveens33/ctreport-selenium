@@ -1,4 +1,4 @@
-content='''
+content = '''
     <script>
     function myFunction() {
         var input, search_term,tbody,tr,span,test_id,test_name;

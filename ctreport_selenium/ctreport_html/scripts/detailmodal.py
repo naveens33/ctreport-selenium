@@ -1,8 +1,8 @@
 def content(var):
-    c='''
+    c = '''
     <script>
         function createmodal(id) {
-           '''+var+'''
+           ''' + var + '''
             var content = '<table class="table table-bordered ">';
             var footer = ''
             if(Array.isArray(tests[id])){
@@ -79,7 +79,7 @@ def content(var):
             
             var html = '<div id="modalWindow" class="modal" data-keyboard="false" data-backdrop="static">';
             html += '<div class="modal-dialog modal-dialog-scrollable ">\
-            <div class="modal-content" style="width: fit-content">\
+            <div class="modal-content">\
             <div class="modal-header">\
             <button type="button" id="closeModal" class="btn btn-danger" data-dismiss="modal" onclick=deletemodal("modalWindow") style="margin:auto 1rem auto auto; font-size: smaller;">Close</button>\
             </div>\

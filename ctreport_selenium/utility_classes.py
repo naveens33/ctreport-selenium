@@ -19,16 +19,20 @@
     Major - Essential functionality is not functioning unless acceptable workaround is implemented
     Minor - Minor inconvenience in the functionality and application remains operational
 """
-class Priority (object):
+
+
+class Priority(object):
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
+
 
 class Severity(object):
     BLOCKER = "blocker"
     CRITICAL = "critical"
     MAJOR = "major"
     MINOR = "minor"
+
 
 class Status(object):
     PASS = "passed"

@@ -1,8 +1,8 @@
 def chart(tests):
-    id_name_dict= {}
+    id_name_dict = {}
     min_li = []
     for test in tests:
-        id_name_dict[test._id]=test._name
+        id_name_dict[test._id] = test._name
         duration = test._duration.split(':')
         hour = float(duration[0])
         min = float(duration[1])
@@ -10,11 +10,11 @@ def chart(tests):
         min_li.append(sec)
 
     content = '''
-        var dict= '''+str(id_name_dict)+'''
+        var dict= ''' + str(id_name_dict) + '''
         var timelinechart = new Chart(document.getElementById("timelinechart"), {
             type: 'line',
             data: {
-                labels: '''+str(list(id_name_dict.keys()))+''',
+                labels: ''' + str(list(id_name_dict.keys())) + ''',
                 datasets: [
                     {
                         backgroundColor:"rgba(188, 216, 249,0.4)",
@@ -23,7 +23,7 @@ def chart(tests):
                         pointBorderColor: "#000000",
                         pointStyle:"crossRot",
                         showLine:true,
-                        data: '''+str(min_li)+''',
+                        data: ''' + str(min_li) + ''',
                         lineTension:0,
                     },
                 ]

@@ -1,5 +1,5 @@
 def content():
-    c='''
+    c = '''
     <footer class="footer">
         <div class="bg-light pl-4 p-2">
             <span id="reference">

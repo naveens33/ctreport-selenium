@@ -1,8 +1,10 @@
 from ctreport_selenium.ctreport_html import dashboard_view, detail_view, footer_view
 from ctreport_selenium.ctreport_html.charts import status, priority, assertion, verification, timeline
-from ctreport_selenium.ctreport_html.scripts import filter, search, footer,tooltip,toggle,detailmodal,imagemodal,toastr
-from ctreport_selenium.utility_classes import Severity,Status
+from ctreport_selenium.ctreport_html.scripts import filter, search, footer, tooltip, toggle, detailmodal, imagemodal, \
+    toastr
+from ctreport_selenium.utility_classes import Severity, Status
 import math
+
 
 def head(tests):
     content = '''
@@ -33,18 +35,18 @@ def head(tests):
                     ''' + \
               assertion.chart(assert_verify_count(tests, "assert")) + '''
                     ''' + \
-              verification.chart(assert_verify_count(tests, "verify")) +\
-                '''
+              verification.chart(assert_verify_count(tests, "verify")) + \
+              '''
             };
         </script>
 		''' + toggle.content + '''
 		''' + filter.content + '''
 		''' + footer.content + '''
-        ''' + search.content +'''
+        ''' + search.content + '''
         ''' + tooltip.content + '''
         ''' + detailmodal.content(modal_details(tests)) + '''
         ''' + imagemodal.content + '''
-        ''' + toastr.content +'''
+        ''' + toastr.content + '''
 		<style>
 		span.extrasmall{
 			font-size: 10px;
@@ -62,7 +64,15 @@ def head(tests):
     '''
     return content
 
-def body(test_details, logo,tests,status):
+
+def body(test_details, logo, tests, status):
+    logo_tag = ''''''
+    if logo is not None:
+        logo_tag = '''
+        <a class="navbar-brand disabled">
+						<img  class="img-fluid" src=''' + logo + ''' style="height: 25px;">
+					</a>
+        '''
     content = '''
     <body class="ash">
         <!--<button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>-->
@@ -71,13 +81,10 @@ def body(test_details, logo,tests,status):
             <div class="container-fluid">
 				<!-- logo -->
 				<div class="Logo-Search" style="padding: 6px 0;">
-					<a class="navbar-brand disabled">
-						<img  class="img-fluid" src=''' + logo + ''' style="height: 25px;">
-					</a>
+					''' + logo_tag + '''
                     <div style="margin-right: auto;">
 						<div class="badge badge-light" style="font-size: large; padding:8px; margin-top:5px;">
 							<span >''' + test_details["test_execution_name"] + '''</span>
-							<span >''' + test_details["application_name"] +'''</span>
 						</div>
 					</div>
 					<!-- Search & Client logo -->
@@ -97,7 +104,8 @@ def body(test_details, logo,tests,status):
                </div> 
               </div>
         </nav>
-		''' + dashboard_view.content(test_details, status, total_pass_asserts, total_pass_verify, total_fail_asserts, total_fail_verify) + '''
+		''' + dashboard_view.content(test_details, status, total_pass_asserts, total_pass_verify, total_fail_asserts,
+                                     total_fail_verify) + '''
 		''' + detail_view.content(status, tests) + '''
 	    <div id="myModal"></div>
 	    <div id="imagemodal"></div>
@@ -107,7 +115,8 @@ def body(test_details, logo,tests,status):
     '''
     return content
 
-def assert_verify_count(tests,type):
+
+def assert_verify_count(tests, type):
     a_pass_ = 0
     a_fail_ = 0
     v_pass_ = [0, 0, 0]
@@ -115,70 +124,71 @@ def assert_verify_count(tests,type):
     for test in tests:
         for log in test._logs:
             if log["type"] == "assert" and log["status"] == Status.PASS:
-                    a_pass_ += 1
+                a_pass_ += 1
             elif log["type"] == "assert" and log["status"] == Status.FAIL:
-                    a_fail_ += 1
+                a_fail_ += 1
             elif log["type"] == "verify" and log["status"] == Status.PASS:
-                if log["severity"]==Severity.BLOCKER:
-                    v_pass_[0]+=1
-                elif log["severity"]==Severity.CRITICAL:
+                if log["severity"] == Severity.BLOCKER:
+                    v_pass_[0] += 1
+                elif log["severity"] == Severity.CRITICAL:
                     v_pass_[1] += 1
                 else:
                     v_pass_[2] += 1
             elif log["type"] == "verify" and log["status"] == Status.FAIL:
-                if log["severity"]==Severity.BLOCKER:
-                    v_fail_[0]+=1
-                elif log["severity"]==Severity.CRITICAL:
+                if log["severity"] == Severity.BLOCKER:
+                    v_fail_[0] += 1
+                elif log["severity"] == Severity.CRITICAL:
                     v_fail_[1] += 1
                 else:
                     v_fail_[2] += 1
     global total_pass_asserts
-    total_pass_asserts=a_pass_
+    total_pass_asserts = a_pass_
     global total_fail_asserts
-    total_fail_asserts=a_fail_
+    total_fail_asserts = a_fail_
     global total_pass_verify
     total_pass_verify = sum(v_pass_)
     global total_fail_verify
     total_fail_verify = sum(v_fail_)
-    if type=="assert":
-       return (a_pass_,a_fail_)
+    if type == "assert":
+        return (a_pass_, a_fail_)
     else:
         return (v_pass_, v_fail_)
 
+
 def overall_test_status(tests):
-    pass_=0
-    fail_=0
-    skip_=0
-    broken_=0
+    pass_ = 0
+    fail_ = 0
+    skip_ = 0
+    broken_ = 0
     for test in tests:
-        if test._result ==Status.PASS:
-           pass_+=1
-        elif test._result ==Status.FAIL:
-            fail_+=1
-        elif test._result ==Status.SKIP:
-            skip_+=1
+        if test._result == Status.PASS:
+            pass_ += 1
+        elif test._result == Status.FAIL:
+            fail_ += 1
+        elif test._result == Status.SKIP:
+            skip_ += 1
         else:
-            broken_+=1
-    total_test=pass_+fail_+skip_+broken_
-    pass_percentage=math.floor((pass_/total_test if total_test else 0)*100)
-    return(pass_,fail_,skip_,broken_,total_test,pass_percentage)
+            broken_ += 1
+    total_test = pass_ + fail_ + skip_ + broken_
+    pass_percentage = math.floor((pass_ / total_test if total_test else 0) * 100)
+    return (pass_, fail_, skip_, broken_, total_test, pass_percentage)
+
 
 def modal_details(tests):
-    v_a={}
+    v_a = {}
     for test in tests:
         for log in test._logs:
-            if log["type"]=="verify" or log["type"]=="assert":
+            if log["type"] == "verify" or log["type"] == "assert":
                 if log["data-type"] == "list" or log["data-type"] == "tuple":
-                    v_a[log["id"]]=log["merge"]
+                    v_a[log["id"]] = log["merge"]
                 elif log["data-type"] == "dict":
-                    v_a[log["id"]]=log["merge"]
-    return "var tests = "+str(v_a)
+                    v_a[log["id"]] = log["merge"]
+    return "var tests = " + str(v_a)
 
 
 def generate(test_details, logo, tests, report_directory_path, filename):
-    head_part=head(tests)
-    body_part=body(test_details,logo, tests, overall_test_status(tests))
+    head_part = head(tests)
+    body_part = body(test_details, logo, tests, overall_test_status(tests))
     f = open(report_directory_path + "TestReport_" + filename + ".html", 'w')
     f.write(head_part + body_part)
     f.close()
-

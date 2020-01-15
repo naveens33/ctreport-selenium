@@ -1,4 +1,4 @@
-content='''
+content = '''
     <script>
         function filterSelection(c) {
             var x, i;
