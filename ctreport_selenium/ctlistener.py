@@ -2,7 +2,7 @@ from datetime import datetime
 from ctreport_selenium.utility_classes import Priority, Severity, Status
 from ctreport_selenium.ctreport_html import html_report
 import os
-
+import sys
 
 class Session:
     _tests = []
@@ -220,7 +220,7 @@ class Test(Session):
             v["actual"] = actual
             v["expected"] = expected
             v["status"] = Status.FAIL
-            v["message"] = "Cannot verify objects of different type"" \
+            v["message"] = "Cannot assert objects of different type"" \
                     ""  actual: " + type(actual) + " expected: " + type(expected)
             self._result = Status.FAIL
         else:
@@ -269,6 +269,7 @@ class Test(Session):
         self._logs.append(v)
         if v["status"] == Status.FAIL:
             Test.NOTBROKEN = True
+            sys.tracebacklimit = -1
             raise AssertionError
 
     def verify_are_equal(self, actual, expected, description=None, severity=Severity.MAJOR, onfail_screenshot=False):

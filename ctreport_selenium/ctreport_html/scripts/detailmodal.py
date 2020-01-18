@@ -10,7 +10,7 @@ def content(var):
                             <tr class="table-secondary"><td>Expected</td></tr>\
                             <tr class="align-middle">';
                 
-                content += '<td>'+tests[id][1].join(", ")+'</td></tr>\
+                content += '<td>'+tests[id][0].join(", ")+'</td></tr>\
                             <tr class="table-secondary"><td>Actual</td></tr>\
                             <tr class="align-middle">';
                 
