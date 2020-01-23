@@ -44,6 +44,11 @@ def table_content(logs):
             <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">Error</a>
             '''
             screenshot_path = log["screenshot"]
+            err = ''''''
+            if log["error"] is not None:
+                err= '''
+                <span class="extrasmall">{}</span> 
+                '''.format(log["error"] )
             if screenshot_path is None:
                 type_ = "Error"
             else:
@@ -56,11 +61,11 @@ def table_content(logs):
                     </td>
                     <td style="width: 70%;">{} 
                         <br>
-                        <span class="extrasmall">{}</span> 
+                       {}
                     </td>
                     <td style="width: 10%;"><span  class="extrasmall">{}</span></td>
                 </tr>                
-            '''.format(status[Status.FAIL][0], status[Status.FAIL][1], type_, log["message"], log["error"],
+            '''.format(status[Status.FAIL][0], status[Status.FAIL][1], type_, log["message"], err,
                        log["start-time"])
         elif log["type"] == "broken":
             c += '''
@@ -82,9 +87,11 @@ def table_content(logs):
                 '''.format(status[Status.SKIP][0], status[Status.SKIP][1], log["message"], log["start-time"])
         elif log["type"] == "verify":
             message_ = ''''''
-            if log["status"] == Status.FAIL:
+            if log["message"] is not None:
                 message_ = '''
-                    <span class="extrasmall">{}</span>
+                    <span>{}</span>
+                    &nbsp;
+                    <br/>
                 '''.format(log["message"])
             type_ = '''
                         <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="" style="text-decoration:none">{}</a>
@@ -97,6 +104,7 @@ def table_content(logs):
             if log["data-type"] is not "others":
                 e_a_content = '''
                     <td style="width: 70%">
+                        '''+message_ + '''
                         <i class="{} pointer" onclick="expandFooter('info')" style="{}"></i>
                         Expected: 
                         &nbsp;
@@ -107,8 +115,7 @@ def table_content(logs):
                         <i class="fas fa-ellipsis-h pointer" onclick="createmodal('{}')"></i>
                         &nbsp;
                         <br/>
-                        '''.format(severity[log["severity"]][0], severity[log["severity"]][1], log["id"], log["id"]) \
-                              + message_ + '''
+                        '''.format(severity[log["severity"]][0], severity[log["severity"]][1], log["id"], log["id"])+ '''
                     </td>
                 '''
             else:
@@ -132,9 +139,11 @@ def table_content(logs):
                    '''.format(status[log["status"]][0], status[log["status"]][1], type_, e_a_content, log["start-time"])
         elif log["type"] == "assert":
             message_ = ''''''
-            if log["status"] == Status.FAIL:
+            if log["message"] is not None:
                 message_ = '''
-                               <span class="extrasmall">{}</span>
+                               <span>{}</span>
+                               &nbsp;
+                                <br/>
                            '''.format(log["message"])
             type_ = '''
                         <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="" style="text-decoration:none">{}</a>
@@ -147,6 +156,7 @@ def table_content(logs):
             if log["data-type"] is not "others":
                 e_a_content = '''
                     <td style="width: 70%">
+                        '''+message_ + '''
                         <i class="{} pointer" onclick="expandFooter('info')" style="{}"></i>
                         Expected: 
                         &nbsp;
@@ -155,12 +165,9 @@ def table_content(logs):
                         Actual: 
                         &nbsp;
                         <i class="fas fa-ellipsis-h pointer" onclick="createmodal('{}')"></i>
-                        &nbsp;
-                        <br/>
-                        '''.format(severity[Severity.BLOCKER][0], severity[Severity.BLOCKER][1], log["id"], log["id"]) \
-                              + message_ + '''
-                    </td>
-                '''
+                        '''.format(severity[Severity.BLOCKER][0], severity[Severity.BLOCKER][1], log["id"], log["id"]) + '''
+                        </td>
+                    '''
             else:
                 e_a_content = '''
                            <td style="width: 70%">

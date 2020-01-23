@@ -38,6 +38,10 @@ class Session:
         Session._driver = driver
 
     @staticmethod
+    def set_driver(driver):
+        Session._driver = driver
+
+    @staticmethod
     def get_test_status(testname):
         for test in Session._tests:
             if test.name == testname:
@@ -132,7 +136,10 @@ class Test(Session):
             "start-time": datetime.now().strftime("%H:%M:%S")
         })
 
-    def error(self, message, err=None, takesheetshot=False):
+    def error(self, *message, exception=None, takesheetshot=False):
+        message = ' '.join(message)
+        if exception is not None:
+            exception = type(exception).__name__
         Test.__temp_error_id += 1
         path = None
         if takesheetshot:
@@ -141,7 +148,7 @@ class Test(Session):
             "id": "#e" + str(Test.__temp_error_id),
             "type": "error",
             "message": message,
-            "error": type(err).__name__,
+            "error": exception,
             "screenshot": path,
             "start-time": str(datetime.now().strftime("%H:%M:%S"))
         })
@@ -211,7 +218,7 @@ class Test(Session):
              "expected": "",
              "merge": "",
              "status": "",
-             "message": "",
+             "message": description,
              "screenshot": "",
              "data-type": "",
              "start-time": str(datetime.now().strftime("%H:%M:%S"))}
@@ -220,7 +227,7 @@ class Test(Session):
             v["actual"] = actual
             v["expected"] = expected
             v["status"] = Status.FAIL
-            v["message"] = "Cannot assert objects of different type"" \
+            v["message"] = "Cannot verify objects of different type"" \
                     ""  actual: " + type(actual) + " expected: " + type(expected)
             self._result = Status.FAIL
         else:
@@ -232,7 +239,6 @@ class Test(Session):
                 v["merge"] = details[1]
                 if details[0] == False:
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -241,7 +247,6 @@ class Test(Session):
                 v["merge"] = [expected, actual]
                 if not self.__verify_list(actual, expected):
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -250,7 +255,6 @@ class Test(Session):
                 v["merge"] = [list(expected), list(actual)]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -258,7 +262,6 @@ class Test(Session):
                 v["data-type"] = "others"
                 if actual != expected:
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -279,7 +282,7 @@ class Test(Session):
              "expected": "",
              "merge": "",
              "status": "",
-             "message": "",
+             "message": description,
              "screenshot": "",
              "severity": severity,
              "data-type": "",
@@ -299,9 +302,8 @@ class Test(Session):
                 v["data-type"] = "dict"
                 details = self.__verify_dict(actual, expected)
                 v["merge"] = details[1]
-                if details[0] == False:
+                if not details[0]:
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -310,7 +312,6 @@ class Test(Session):
                 v["merge"] = [expected, actual]
                 if not self.__verify_list(actual, expected):
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -319,7 +320,6 @@ class Test(Session):
                 v["merge"] = [list(expected), list(actual)]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -327,7 +327,6 @@ class Test(Session):
                 v["data-type"] = "others"
                 if actual != expected:
                     v["status"] = Status.FAIL
-                    v["message"] = description
                     self._result = Status.FAIL
                 else:
                     v["status"] = Status.PASS
@@ -336,6 +335,10 @@ class Test(Session):
         else:
             v["screenshot"] = None
         self._logs.append(v)
+        if v["status"] == Status.PASS:
+            return True
+        else:
+            return False
 
     def __verify_dict(self, actual, expected):
         merge = {}

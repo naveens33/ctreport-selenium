@@ -1,3 +1,0 @@
-ctreport_selenium
-pytest_sample
-unittest_sample
