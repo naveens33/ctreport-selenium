@@ -121,12 +121,12 @@ def table_content(logs):
             else:
                 e_a_content = '''
                            <td style="width: 70%">
+                           '''+message_ + '''
                                <i class="{} pointer" onclick="expandFooter('info')" style="{}"></i>
                                Expected: {}    Actual: {}
                                <br>
                                 '''.format(severity[log["severity"]][0], severity[log["severity"]][1], log["expected"],
-                                           log["actual"]) \
-                              + message_ + '''
+                                           log["actual"])+ '''
                            </td>
                        '''
             c += '''
@@ -171,12 +171,12 @@ def table_content(logs):
             else:
                 e_a_content = '''
                            <td style="width: 70%">
+                           '''+message_ + '''
                                <i class="{} pointer" onclick="expandFooter('info')" style="{}"></i>
                                Expected: {}    Actual: {}
                                <br>
                                '''.format(severity[Severity.BLOCKER][0], severity[Severity.BLOCKER][1], log["expected"],
-                                          log["actual"]) \
-                              + message_ + '''
+                                          log["actual"]) + '''
                            </td>
                        '''
             c += '''
