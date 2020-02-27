@@ -9,7 +9,7 @@ def screenshot_section(test):
             c += '''<a id="{}"> 
                         <i class="fas fa-image pl-2 pointer" style="font-size:30px; color:#aaa;" onclick="createimagemodal('{}','{}')"></i>
                     </a>
-            '''.format(log["screenshot"], log["screenshot"], log["screenshot"])
+            '''.format(log["id"], log["path"], log["path"])
         elif log["type"] == "error":
             if log["screenshot"] is not None:
                 c += '''
@@ -39,6 +39,22 @@ def table_content(logs):
                     <td style="width: 10%;"><span  class="extrasmall">{}</span></td>
                 </tr>                
                 '''.format(status[Status.PASS][0], status[Status.PASS][1], log["message"], log["start-time"])
+        elif log["type"] == "screenshot":
+            type_ = '''
+                        <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">Screenshot</a>
+                        '''.format(log["id"],log["path"])
+            c += '''
+                <tr class="border-bottom">
+                    <td class="text-sm-center" style="width: 10%;"><i class="{}" style="{}"></i></td>
+                    <td style="width: 10%;">
+                    {}
+                    </td>
+                    <td style="width: 70%;">{}
+                    </td>
+                    <td style="width: 10%;"><span  class="extrasmall">{}</span></td>
+                </tr>                
+            '''.format(status[Status.PASS][0], status[Status.PASS][1], type_, log["message"],
+                       log["start-time"])
         elif log["type"] == "error":
             type_ = '''
             <a href="#{}" data-toggle="popover" data-trigger="hover" data-content="{}" data-original-title="" title="">Error</a>

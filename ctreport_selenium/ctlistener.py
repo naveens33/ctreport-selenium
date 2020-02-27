@@ -4,6 +4,7 @@ from ctreport_selenium.ctreport_html import html_report
 import os
 import sys
 
+
 class Session:
     _tests = []
     _report_directory_path = ""
@@ -22,11 +23,27 @@ class Session:
     }
     '''
     __test_details = {}
+    __default_options = {
+        "title": "Test Report",
+        "logo": None,
+        "reference": True
+    }
 
     @staticmethod
-    def start(test_name, path=os.path.abspath('.') + "/report/", driver=None, logo=None, session_details=None):
+    def __validate_report_options(report_options):
+        for key in Session.__default_options.keys():
+            if not key in report_options.keys():
+                report_options[key] = Session.__default_options[key]
+        return report_options
+
+    @staticmethod
+    def start(test_name, path=os.path.abspath('.') + "/report/", driver=None, session_details=None,
+              report_options=None):
+        if report_options is None:
+            Session.__report_options = Session.__default_options
+        else:
+            Session.__report_options = Session.__validate_report_options(report_options)
         Session.__test_details = session_details
-        Session.__logo = logo
         Session.__test_details["test_execution_name"] = test_name
         Session.__test_details["start_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
         Session.__filename = datetime.now().strftime("%d_%m_%y_%H%M%S")
@@ -54,7 +71,7 @@ class Session:
             Session.__test_details["duration"] = str(
                 datetime.strptime(Session.__test_details["end_time"], '%d-%m-%y %H:%M:%S')
                 - datetime.strptime(Session.__test_details["start_time"], '%d-%m-%y %H:%M:%S'))
-            '''
+
             for test in Session._tests:
                 print(test._name,
                       test._id,
@@ -66,9 +83,10 @@ class Session:
                       test._priority,
                       test._logs)
             print(Session.__test_details)
-            #ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
-            '''
-            html_report.generate(Session.__test_details, Session.__logo, Session._tests, Session._report_directory_path,
+            # ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
+
+            html_report.generate(Session.__report_options, Session.__test_details, Session._tests,
+                                 Session._report_directory_path,
                                  Session.__filename)
         else:
             print("Failed before test starts, No test found.")
@@ -78,10 +96,12 @@ class Test(Session):
     __temp_verify_id = 0
     __temp_assert_id = 0
     __temp_error_id = 0
+    __temp_screenshot_id = 0
     # test = None
     __temp_test_id = 0
     _result = ""
     NOTBROKEN = False
+    __id_li = []
 
     def __init__(self, name, id=None, description=None, priority=Priority.HIGH):
         # self.test=test
@@ -91,6 +111,15 @@ class Test(Session):
         else:
             Test.__temp_test_id += 1
             self._id = "#" + str(Test.__temp_test_id)
+        while self._id in self.__id_li:
+            i=1
+            if "_" in self._id:
+                i = int(self._id.split('_')[1])
+                i=i+1
+                self._id = self._id.split('_')[0]
+            self._id = self._id+"_"+str(i)
+            i+=1
+        self.__id_li.append(self._id)
         self._description = description
         self._priority = priority
         self._start_time = datetime.now().strftime("%d-%m-%y %H:%M:%S")
@@ -176,6 +205,7 @@ class Test(Session):
         self._result = Status.SKIP
 
     def __take_failed_screenshot(self):
+        Test.__temp_error_id += 1
         try:
             index = 1
             filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
@@ -188,28 +218,45 @@ class Test(Session):
             return filename
         except Exception as err:
             self._logs.append(
-                {"type": "error",
-                 "message": "CTReport error: Unable to take screenshot",
-                 "error": type(err).__name__,
-                 "start-time": str(datetime.now().strftime("%H:%M:%S")),
-                 "screenshot": None
-                 })
+                {
+                    "id": "#e" + str(Test.__temp_error_id),
+                    "type": "error",
+                    "message": "CTReport error: Unable to take screenshot",
+                    "error": type(err).__name__,
+                    "start-time": str(datetime.now().strftime("%H:%M:%S")),
+                    "screenshot": None
+                })
 
     def take_screenshot(self, message=None):
-        index = 1
-        filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
-        path = Session._report_directory_path + filename
-        while os.path.exists(path):
-            index += 1
+        Test.__temp_screenshot_id += 1
+        Test.__temp_error_id += 1
+        try:
+            index = 1
             filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
             path = Session._report_directory_path + filename
-        Session.__driver.save_screenshot(path)
-        self._logs.append(
-            {"type": "screenshot",
-             "message": message,
-             "path": filename,
-             "start-time": str(datetime.now().strftime("%H:%M:%S"))
-             })
+            while os.path.exists(path):
+                index += 1
+                filename = ''.join(e for e in self._name if e.isalnum()) + "_" + str(index) + ".png"
+                path = Session._report_directory_path + filename
+            Session._driver.save_screenshot(path)
+            self._logs.append(
+                {
+                    "id": "#s" + str(Test.__temp_screenshot_id),
+                    "type": "screenshot",
+                    "message": message,
+                    "path": filename,
+                    "start-time": str(datetime.now().strftime("%H:%M:%S"))
+                })
+        except Exception as err:
+            self._logs.append(
+                {
+                    "id": "#e" + str(Test.__temp_error_id),
+                    "type": "error",
+                    "message": "CTReport error: Unable to take screenshot",
+                    "error": type(err).__name__,
+                    "start-time": str(datetime.now().strftime("%H:%M:%S")),
+                    "screenshot": None
+                })
 
     def assert_are_equal(self, actual, expected, description=None, onfail_screenshot=False):
         v = {"id": "#a" + str(Test.__temp_assert_id),
@@ -289,12 +336,14 @@ class Test(Session):
              "start-time": str(datetime.now().strftime("%H:%M:%S"))}
         Test.__temp_verify_id += 1
         if type(actual) != type(expected):
-            v["actual"] = actual
-            v["expected"] = expected
-            v["status"] = Status.FAIL
+            v["data-type"] = "others"
+            v["actual"] = str(actual)
+            v["expected"] = str(expected)
+            v["merge"] = [str(expected), str(actual)]
+            v["status"] = Status.BROKEN
             v["message"] = "Cannot verify objects of different type"" \
-            ""  actual: " + type(actual) + " expected: " + type(expected)
-            self._result = Status.FAIL
+            "" Expected type: {} Actual type: {}".format(type(expected), type(actual)).replace('<','{').replace('>','}')
+            self._result = Status.BROKEN
         else:
             v["actual"] = actual
             v["expected"] = expected

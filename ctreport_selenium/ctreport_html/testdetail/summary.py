@@ -22,7 +22,16 @@ def search_filter(status_):
     return c
 
 
-def summary_table(tests):
+def summary_table(tests, reference):
+    r = '''
+        <i class="{} small pointer " onclick="expandFooter('info')"></i>
+    '''.format(info_["class"])
+    if not reference:
+        r = ''''''
+
+    # print(reference)
+    # print("r",r)
+
     tr = ''''''
     for test in tests:
         tr += '''
@@ -50,11 +59,13 @@ def summary_table(tests):
           <tr class="text-sm-center border-bottom">
             <th>
                 Status
-                <i class="{} small pointer " onclick="expandFooter('info')"></i>
+                
+                '''+r+'''
             </th>
             <th>
                 Priority
-                <i class="{} small pointer" onclick="expandFooter('info')"></i>
+                
+                '''+r+'''
             </th>
             <th>ID</th>
             <th>Summary</th>
@@ -64,17 +75,17 @@ def summary_table(tests):
             {}
         </tbody>
     </table>
-    '''.format(info_["class"], info_["class"], tr)
+    '''.format(tr)
     return c
 
 
-def content(status, tests):
+def content(status, tests, reference):
     c = '''
     <!--Summary table-->
     <div class="col-sm-12 col-lg-5">
         <nav class=" p-2 test_details p-md-4">
             ''' + search_filter(status) + '''
-            ''' + summary_table(tests) + '''
+            ''' + summary_table(tests, reference) + '''
         </nav>
     </div>
     '''

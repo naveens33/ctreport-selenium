@@ -6,11 +6,14 @@ from ctreport_selenium.utility_classes import Severity, Status
 import math
 
 
-def head(tests):
+def head(tests, title):
+    t = '''
+        <title>{}</title>
+    '''.format(title)
     content = '''
     <html>
     <head>
-        <title>Test Report</title>
+        ''' + t + '''
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/c728cbf4/ctreport_selenium/ctreport_html/style.css" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
@@ -65,14 +68,18 @@ def head(tests):
     return content
 
 
-def body(test_details, logo, tests, status):
-    logo_tag = ''''''
-    if logo is not None:
-        logo_tag = '''
-        <a class="navbar-brand disabled">
-						<img  class="img-fluid" src=''' + logo + ''' style="height: 25px;">
-					</a>
-        '''
+def body(test_details, report_options, tests, status):
+    logo_tag = '''
+            <a class="navbar-brand disabled">
+    						<img  class="img-fluid" src="{}" style="height: 25px;">
+    					</a>
+            '''.format(report_options["logo"])
+    if report_options["logo"] is None:
+        logo_tag = ''''''
+
+    footer_tag = footer_view.content()
+    if not report_options["reference"]:
+        footer_tag = ''''''
     content = '''
     <body class="ash">
         <!--<button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>-->
@@ -106,10 +113,10 @@ def body(test_details, logo, tests, status):
         </nav>
 		''' + dashboard_view.content(test_details, status, total_pass_asserts, total_pass_verify, total_fail_asserts,
                                      total_fail_verify) + '''
-		''' + detail_view.content(status, tests) + '''
+		''' + detail_view.content(status, tests, report_options["reference"]) + '''
 	    <div id="myModal"></div>
 	    <div id="imagemodal"></div>
-	    ''' + footer_view.content() + '''
+	    ''' + footer_tag + '''
 	</body>
 	</html>
     '''
@@ -186,9 +193,9 @@ def modal_details(tests):
     return "var tests = " + str(v_a)
 
 
-def generate(test_details, logo, tests, report_directory_path, filename):
-    head_part = head(tests)
-    body_part = body(test_details, logo, tests, overall_test_status(tests))
+def generate(report_options, test_details, tests, report_directory_path, filename):
+    head_part = head(tests, report_options["title"])
+    body_part = body(test_details, report_options, tests, overall_test_status(tests))
     f = open(report_directory_path + "TestReport_" + filename + ".html", 'w')
     f.write(head_part + body_part)
     f.close()
