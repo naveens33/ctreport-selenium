@@ -13,7 +13,7 @@ class Session:
     __test_details = {}
     __default_options = {
         "title": "Test Report",
-        "logo": None,
+        "logo": "",
         "show_reference": True,
         "zip_if_screenshot": False
     }

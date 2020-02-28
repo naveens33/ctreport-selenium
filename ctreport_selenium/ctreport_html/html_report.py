@@ -74,7 +74,7 @@ def body(test_details, report_options, tests, status):
     						<img  class="img-fluid" src="{}" style="height: 25px;">
     					</a>
             '''.format(report_options["logo"])
-    if report_options["logo"] is None:
+    if report_options["logo"] == "":
         logo_tag = ''''''
 
     footer_tag = footer_view.content()
