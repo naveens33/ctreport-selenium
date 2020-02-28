@@ -78,7 +78,7 @@ def body(test_details, report_options, tests, status):
         logo_tag = ''''''
 
     footer_tag = footer_view.content()
-    if not report_options["reference"]:
+    if not report_options["show_reference"]:
         footer_tag = ''''''
     content = '''
     <body class="ash">
@@ -113,7 +113,7 @@ def body(test_details, report_options, tests, status):
         </nav>
 		''' + dashboard_view.content(test_details, status, total_pass_asserts, total_pass_verify, total_fail_asserts,
                                      total_fail_verify) + '''
-		''' + detail_view.content(status, tests, report_options["reference"]) + '''
+		''' + detail_view.content(status, tests, report_options["show_reference"]) + '''
 	    <div id="myModal"></div>
 	    <div id="imagemodal"></div>
 	    ''' + footer_tag + '''

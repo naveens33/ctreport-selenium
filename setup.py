@@ -18,6 +18,7 @@ setup(
     download_url='https://github.com/naveens33/ctreport-selenium/archive/0.1.1.tar.gz',
     install_requires=[
         'datetime',
+        'shutil'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

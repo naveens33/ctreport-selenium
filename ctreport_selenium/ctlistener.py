@@ -10,29 +10,21 @@ class Session:
     _report_directory_path = ""
     # _jsonfile_directory_path = ""
     _driver = None
-    '''
-    session_details = {
-        "owner": "",
-        "environment": "",
-        "browser_name": "",
-        "browser_version": "",
-        "application_name":"",
-        "os": "",
-        "os_version": "",
-        "test_execution_name": "",
-    }
-    '''
     __test_details = {}
     __default_options = {
         "title": "Test Report",
         "logo": None,
-        "reference": True
+        "show_reference": True,
+        "zip_if_screenshot": False
     }
 
     @staticmethod
     def __validate_report_options(report_options):
         for key in Session.__default_options.keys():
             if not key in report_options.keys():
+                report_options[key] = Session.__default_options[key]
+            if type(report_options[key]) != type(Session.__default_options[key]):
+                report_options.pop(key)
                 report_options[key] = Session.__default_options[key]
         return report_options
 
@@ -71,7 +63,7 @@ class Session:
             Session.__test_details["duration"] = str(
                 datetime.strptime(Session.__test_details["end_time"], '%d-%m-%y %H:%M:%S')
                 - datetime.strptime(Session.__test_details["start_time"], '%d-%m-%y %H:%M:%S'))
-
+            '''
             for test in Session._tests:
                 print(test._name,
                       test._id,
@@ -83,11 +75,19 @@ class Session:
                       test._priority,
                       test._logs)
             print(Session.__test_details)
+            '''
             # ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
+            if len(os.listdir(Session._report_directory_path)) == 0 and Session.__report_options[
+                "zip_if_screenshot"]:
+                Session.__report_options["zip_if_screenshot"] = False
 
             html_report.generate(Session.__report_options, Session.__test_details, Session._tests,
                                  Session._report_directory_path,
                                  Session.__filename)
+            if Session.__report_options["zip_if_screenshot"]:
+                import shutil
+                zip_path = shutil.make_archive(Session.__filename, 'zip', Session._report_directory_path)
+                shutil.move(zip_path, Session._report_directory_path.split(Session.__filename)[0])
         else:
             print("Failed before test starts, No test found.")
 
@@ -112,13 +112,13 @@ class Test(Session):
             Test.__temp_test_id += 1
             self._id = "#" + str(Test.__temp_test_id)
         while self._id in self.__id_li:
-            i=1
+            i = 1
             if "_" in self._id:
                 i = int(self._id.split('_')[1])
-                i=i+1
+                i = i + 1
                 self._id = self._id.split('_')[0]
-            self._id = self._id+"_"+str(i)
-            i+=1
+            self._id = self._id + "_" + str(i)
+            i += 1
         self.__id_li.append(self._id)
         self._description = description
         self._priority = priority
@@ -132,29 +132,6 @@ class Test(Session):
 
         if self._result == "":
             self._result = Status.PASS
-
-        '''
-        result = self.test.defaultTestResult()
-        self.test._feedErrorsToResult(result, self.test._outcome.errors)
-        
-        if (len(result.errors) == 0 and
-            len(result.failures) == 0 and
-            self.SKIP==False and
-            self.result == ""):
-            self.result = Status.PASS
-        elif self.SKIP == True:
-            self.result = Status.SKIP
-        elif self.result == Status.FAIL:
-            self.result = Status.FAIL
-        else:
-            self.result = Status.BROKEN
-            self.logs.append({
-                "type": "broken",
-                "error": str(result.errors[0][1]),
-                "start-time": str(datetime.now().strftime("%H:%M:%S"))
-            })
-            print("result", type(result.errors[0][1]))
-        '''
         Session._tests.append(self)
 
     def log(self, *message):
@@ -184,7 +161,7 @@ class Test(Session):
         self._result = Status.FAIL
 
     def broken(self, *err):
-        if Test.NOTBROKEN == True:
+        if Test.NOTBROKEN:
             pass
         else:
             self._result = Status.BROKEN
@@ -284,7 +261,7 @@ class Test(Session):
                 v["data-type"] = "dict"
                 details = self.__verify_dict(actual, expected)
                 v["merge"] = details[1]
-                if details[0] == False:
+                if not details[0]:
                     v["status"] = Status.FAIL
                     self._result = Status.FAIL
                 else:
@@ -342,7 +319,8 @@ class Test(Session):
             v["merge"] = [str(expected), str(actual)]
             v["status"] = Status.BROKEN
             v["message"] = "Cannot verify objects of different type"" \
-            "" Expected type: {} Actual type: {}".format(type(expected), type(actual)).replace('<','{').replace('>','}')
+            "" Expected type: {} Actual type: {}".format(type(expected), type(actual)).replace('<', '{').replace('>',
+                                                                                                                 '}')
             self._result = Status.BROKEN
         else:
             v["actual"] = actual
@@ -409,7 +387,7 @@ class Test(Session):
             for s in v:
                 merge[s] = ['null', actual[s], "false"]
 
-        if status == False:
+        if not status:
             return status, merge
         return status, merge
 
