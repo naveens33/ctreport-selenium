@@ -1,8 +1,7 @@
 from datetime import datetime
 from ctreport_selenium.utility_classes import Priority, Severity, Status
 from ctreport_selenium.ctreport_html import html_report
-import os
-import sys
+import os, sys, copy
 
 
 class Session:
@@ -142,13 +141,13 @@ class Test(Session):
             "start-time": datetime.now().strftime("%H:%M:%S")
         })
 
-    def error(self, *message, exception=None, takesheetshot=False):
+    def error(self, *message, exception=None, takescreenshot=False):
         message = ' '.join(message)
         if exception is not None:
             exception = type(exception).__name__
         Test.__temp_error_id += 1
         path = None
-        if takesheetshot:
+        if takescreenshot:
             path = self.__take_failed_screenshot()
         self._logs.append({
             "id": "#e" + str(Test.__temp_error_id),
@@ -268,7 +267,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             elif type(actual) == list:
                 v["data-type"] = "list"
-                v["merge"] = [expected, actual]
+                v["merge"] = [copy.deepcopy(expected), copy.deepcopy(actual)]
                 if not self.__verify_list(actual, expected):
                     v["status"] = Status.FAIL
                     self._result = Status.FAIL
@@ -276,7 +275,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             elif type(actual) == tuple:
                 v["data-type"] = "tuple"
-                v["merge"] = [list(expected), list(actual)]
+                v["merge"] = [list(copy.deepcopy(expected)), list(copy.deepcopy(actual))]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
                     self._result = Status.FAIL
@@ -336,7 +335,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             elif type(actual) == list:
                 v["data-type"] = "list"
-                v["merge"] = [expected, actual]
+                v["merge"] = [copy.deepcopy(expected), copy.deepcopy(actual)]
                 if not self.__verify_list(actual, expected):
                     v["status"] = Status.FAIL
                     self._result = Status.FAIL
@@ -344,7 +343,7 @@ class Test(Session):
                     v["status"] = Status.PASS
             elif type(actual) == tuple:
                 v["data-type"] = "tuple"
-                v["merge"] = [list(expected), list(actual)]
+                v["merge"] = [list(copy.deepcopy(expected)), list(copy.deepcopy(actual))]
                 if not self.__verify_tuple(actual, expected):
                     v["status"] = Status.FAIL
                     self._result = Status.FAIL
