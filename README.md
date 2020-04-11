@@ -17,8 +17,8 @@ session_details = {
             "owner": "Naveen.S",
             "application": "MyApp1",
             "application version": "V1.04",
-            "OS": "Windows10",
-            "Browser": "Chrome"
+            "os": "Windows10",
+            "browser": "Chrome"
         }
 ```
 
@@ -32,7 +32,7 @@ In report_options, below propeties can be provided
  ```
  report_options = {
             "title": "Test Report",
-            "logo": r"MYLOGO.PNG",
+            "logo": r"D:\MYLOGO.PNG",
             "show_reference": True,
             "zip_if_screenshot": True
         }
