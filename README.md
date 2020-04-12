@@ -92,6 +92,7 @@ Severity: Applies to verification and assertion statements
 Note: All assertions are treated as Blocker severity
 
 |Severity|Description|
+|--------|-----------|
 |Blocker|The system or functionality is currently unavailable to continue working on the application because of this incident|
 |Critical|Essential functionality is not functioning and no acceptable workaround|
 |Major|Essential functionality is not functioning unless acceptable workaround is implemented|
