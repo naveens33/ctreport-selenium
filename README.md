@@ -75,4 +75,24 @@ Status: Test status after execution
  |Skip|Test case skipped due to blocker or critical issue in dependencies|
  |Broken|Test case stopped due to fatal errors|
  
+ ### Priority 
  
+ Priority: Applies to test case
+
+|Priority|Description|
+|--------|-----------|
+|High|Test case on the most important features of the application|
+|Medium|Test case on features of the application which is next to High priority test cases|
+|Low|Test case on features of the application which is considered to be executed rarely|
+
+### Severity
+
+Severity: Applies to verification and assertion statements
+
+Note: All assertions are treated as Blocker severity
+
+|Severity|Description|
+|Blocker|The system or functionality is currently unavailable to continue working on the application because of this incident|
+|Critical|Essential functionality is not functioning and no acceptable workaround|
+|Major|Essential functionality is not functioning unless acceptable workaround is implemented|
+|Minor|Minor inconvenience in the functionality and application remains operational|
