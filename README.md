@@ -8,7 +8,7 @@ ctreport-selenium is a simple, creative and customizable report for selenium sof
 
 ### Define Session 
 
-First you should define the session. While creating session session_details and report_options can be defined/modified.
+First, you should define the session. While creating session session_details and report_options can be defined/modified.
 
 In session_details, you can provide the current test session details
 
@@ -22,7 +22,7 @@ session_details = {
         }
 ```
 
-In report_options, below propeties can be provided
+In report_options, below properties can be provided
 
 * title (report title)
 * logo (your company logo)
@@ -49,5 +49,12 @@ Session.start(test_name="Smoke Test - MyApp1",
               report_options=report_options)
 ```
 
-### Define Test
+
+### Create Test
+For each test, you can create an object for the Test class. While creating the object for the Test class you can define the below parameters
+
+* Name
+* Id 
+* Description	
+* Priority
 
