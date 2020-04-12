@@ -72,6 +72,7 @@ test = Test("Search Fund links",
 |set_driver(driver)|In case of driver is not passes in Session.start() method later you can pass through this method|
 
 ### Methods in Test class
+
 |Method|Description|
 |------|-----------|
 |log(self, \*message)|Method to record the steps for your test in the report <br> ```self.test.log("Navigate to search page")```|
@@ -109,9 +110,9 @@ Status: Test status after execution
  |Skip|Test case skipped due to blocker or critical issue in dependencies|
  |Broken|Test case stopped due to fatal errors|
  
- ### Priority 
+### Priority 
  
- Priority: Applies to test case
+Priority: Applies to test case
 
 |Priority|Description|
 |--------|-----------|
