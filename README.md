@@ -1,6 +1,6 @@
 # CT Report for Selenium
 
-ctreport-selenium is a simple, creative and customizable report for selenium software testing using Python.
+ctreport-selenium is a simple, creative and customizable report for selenium automation testing using Python.
 
 ### Installation and Usage
 
