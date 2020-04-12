@@ -65,6 +65,18 @@ test = Test("Search Fund links",
              priority=Priority.MEDIUM)
 ```
 
+### Methods in Session class
+
+|Method|Description|
+|------|-----------|
+|set_driver(driver)|In case of driver is not passes in Session.start() method later you can pass through this method|
+
+### Methods in Test class
+|Method|Description|
+|------|-----------|
+|log(self, \*message)|Method to record the steps in your test```self.test.log("Navigate to search page")```|
+
+
 ### Finish Test
 Every test should be finshed before next test start/before Session ends
 ```
