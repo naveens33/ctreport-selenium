@@ -56,5 +56,23 @@ For each test, you can create an object for the Test class. While creating the o
 * Name
 * Id 
 * Description	
-* Priority
+* Priority (Refer below reference section)
 
+```
+test = Test("Search Fund links", id=4574 ,description="Search by search term- Fund", priority=Priority.MEDIUM)
+```
+
+## Reference 
+
+### Status
+
+Status: Test status after execution
+
+ |Status|Description|
+ |------|-----------|
+ |Pass |Test case is passed without any verification/assertion/fatal errors|
+ |Fail|Test case is failed due to verification/assertion errors|
+ |Skip|Test case skipped due to blocker or critical issue in dependencies|
+ |Broken|Test case stopped due to fatal errors|
+ 
+ 
