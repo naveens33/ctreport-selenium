@@ -1,3 +1,5 @@
+![Logo](/ctreport_selenium/ctreport_html/resource/logo.png) 
+
 # CT Report for Selenium
 
 ctreport-selenium is a simple, creative and customizable report for selenium automation testing using Python.
