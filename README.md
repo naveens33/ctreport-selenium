@@ -76,7 +76,7 @@ test = Test("Search Fund links",
 |Method|Description|
 |------|-----------|
 |log(self, \*message)|Method to record the steps for your test in the report <br> ```self.test.log("Navigate to search page")```|
-|error(self, \*message, exception=None, takescreenshot=False):|Method to record the error message in the report|
+|error(self, \*message, exception=None, takescreenshot=False)|Method to record the error message in the report|
 |broken(self, \*err)|Method to mark the current test as Broken and record the exceptions<br> Broken - Test case stopped due to fatal errors(check the reference section)|
 |skip(self, message)|Method to skip the current test|
 |take_screenshot(self, message=None)|Method to take screenshot|
@@ -110,7 +110,7 @@ Status: Test status after execution
  |Skip|Test case skipped due to blocker or critical issue in dependencies|
  |Broken|Test case stopped due to fatal errors|
  
-### Priority 
+### Priority
  
 Priority: Applies to test case
 
