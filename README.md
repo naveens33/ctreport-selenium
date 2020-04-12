@@ -1,6 +1,6 @@
 # CT Report for Selenium
 
-ctreport for selenium automation will provide simple and creative html file for day to day software testing
+ctreport-selenium is a simple, creative and customizable report for selenium software testing using Python.
 
 ### Installation and Usage
 
@@ -8,7 +8,7 @@ ctreport for selenium automation will provide simple and creative html file for 
 
 ### Define Session 
 
-First you should define the session. While creating session session_details and report options should be provided.
+First you should define the session. While creating session session_details and report_options can be defined/modified.
 
 In session_details, you can provide the current test session details
 
@@ -37,3 +37,17 @@ In report_options, below propeties can be provided
             "zip_if_screenshot": True
         }
  ```
+
+**Start the Session**
+
+```
+driver = webdriver.Chrome(executable_path=r'chromedriver.exe')
+Session.start(test_name="Smoke Test - MyApp1", 
+              path="D:\\reports",
+              driver=driver, 
+              session_details=session_details, 
+              report_options=report_options)
+```
+
+### Define Test
+
