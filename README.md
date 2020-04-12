@@ -59,7 +59,22 @@ For each test, you can create an object for the Test class. While creating the o
 * Priority (Refer below reference section)
 
 ```
-test = Test("Search Fund links", id=4574 ,description="Search by search term- Fund", priority=Priority.MEDIUM)
+test = Test("Search Fund links", 
+             id=4574,
+             description="Search by search term- Fund",
+             priority=Priority.MEDIUM)
+```
+
+### Finish Test
+Every test should be finshed before next test start/before Session ends
+```
+test.finish()
+```
+
+### End Sesion
+Session should be end at end of your script
+```
+Session.end()
 ```
 
 ## Reference 
