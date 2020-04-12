@@ -74,8 +74,14 @@ test = Test("Search Fund links",
 ### Methods in Test class
 |Method|Description|
 |------|-----------|
-|log(self, \*message)|Method to record the steps in your test
-```self.test.log("Navigate to search page")```|
+|log(self, \*message)|Method to record the steps for your test in the report <br> ```self.test.log("Navigate to search page")```|
+|error(self, \*message, exception=None, takescreenshot=False):|Method to record the error message in the report|
+|broken(self, \*err)|Method to mark the current test as Broken and record the exceptions<br> Broken - Test case stopped due to fatal errors(check the reference section)|
+|skip(self, message)|Method to skip the current test|
+|take_screenshot(self, message=None)|Method to take screenshot|
+|assert_are_equal(self, actual, expected, description=None, onfail_screenshot=False)|Mark the assertion steps and it supports asserting following types <br> *Number* <br> *String* <br> *Boolean* <br> *Dictionary* <br> *List* <br> *Tuple* <br> **Note:** *All assertions are treated as Blocker severity* (check the reference section)|
+|verify_are_equal(self, actual, expected, description=None, severity=Severity.MAJOR, onfail_screenshot=False)|Mark the verification steps and it supports verifing the following types <br> *Number* <br> *String* <br> *Boolean* <br> *Dictionary* <br> *List* <br> *Tuple* <br> (check the reference section)|
+
 
 
 ### Finish Test
