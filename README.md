@@ -89,7 +89,7 @@ Status: Test status after execution
 
 Severity: Applies to verification and assertion statements
 
-! Note: All assertions are treated as Blocker severity
+Note: All assertions are treated as Blocker severity
 
 |Severity|Description|
 |--------|-----------|
