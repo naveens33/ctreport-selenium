@@ -74,7 +74,9 @@ test = Test("Search Fund links",
 ### Methods in Test class
 |Method|Description|
 |------|-----------|
-|log(self, \*message)|Method to record the steps in your test```self.test.log("Navigate to search page")```|
+|log(self, \*message)|Method to record the steps in your test
+```self.test.log("Navigate to search page")```
+|
 
 
 ### Finish Test
