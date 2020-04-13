@@ -6,20 +6,16 @@ with open("README.md", "r") as fh:
 
 setup(
     name='ctreport_selenium',
-    version='1.0.3',
+    version='1.1.1',
     author='Naveen.S',
     author_email='naveensagayaselvaraj@gmail.com',
     license='MIT',
-    description='ctreport for selenium automation will provide simple and creative html file for day to day software testing',
+    description='ctreport-selenium is a simple, creative and customizable report for selenium automation testing using Python.',
     long_description=long_description,
     long_description_content_type="text/markdown",
     packages=setuptools.find_packages(),
-    url='https://github.com/naveens33/ctreport-selenium',
+    url='https://naveens33.github.io/ctreport-selenium/',
     download_url='https://github.com/naveens33/ctreport-selenium/archive/0.1.1.tar.gz',
-    install_requires=[
-        'datetime',
-        'shutil'
-    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

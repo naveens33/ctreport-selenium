@@ -34,7 +34,10 @@ class Session:
             Session.__report_options = Session.__default_options
         else:
             Session.__report_options = Session.__validate_report_options(report_options)
-        Session.__test_details = session_details
+        if session_details is None:
+            Session.__test_details = {}
+        else:
+            Session.__test_details = session_details
         Session.__test_details["test_execution_name"] = test_name
         Session.__test_details["start_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
         Session.__filename = datetime.now().strftime("%d_%m_%y_%H%M%S")
