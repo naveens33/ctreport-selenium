@@ -4,6 +4,10 @@
 
 ctreport-selenium is a simple, creative and customizable report for selenium automation testing using Python.
 
+## Sample
+
+![Sample Image](ctreport_sample.gif)
+
 ### Installation and Usage
 
 ```pip install ctreport-selenium```
