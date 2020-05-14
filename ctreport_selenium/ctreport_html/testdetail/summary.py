@@ -43,16 +43,16 @@ def summary_table(tests, reference):
                     <i class="{}" style="{}"></i>
                     <span style="display: none">High</span>
                 </td>
-                <td class="align-middle text-sm-center">
+                <td class="align-middle text-sm-center cut-text">
                 <span>{}</span>
                 </td>
                 <td class="align-middle">
-                    <span>{}</span>
+                    <span title="{}">{}</span>
                     </td>
             </tr>
         '''.format(test._result, test._id, status[test._result][0], status[test._result][1],
                    priority[test._priority][0],
-                   priority[test._priority][1], test._id, test._name)
+                   priority[test._priority][1], test._id, test._name,test._name)
     c = '''
         <table class="table table-borderless table-hover " style="font-size: 15px;">
         <thead>

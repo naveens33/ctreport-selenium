@@ -1,6 +1,7 @@
 from datetime import datetime
 from ctreport_selenium.utility_classes import Priority, Severity, Status
 from ctreport_selenium.ctreport_html import html_report
+from ctreport_selenium.ctdbupdate import CTDataBase
 import os, sys, copy
 
 
@@ -14,7 +15,8 @@ class Session:
         "title": "Test Report",
         "logo": "",
         "show_reference": True,
-        "zip_if_screenshot": False
+        "zip_if_screenshot": False,
+        "history": False
     }
 
     @staticmethod
@@ -82,6 +84,20 @@ class Session:
             if len(os.listdir(Session._report_directory_path)) == 0 and Session.__report_options[
                 "zip_if_screenshot"]:
                 Session.__report_options["zip_if_screenshot"] = False
+
+            if Session.__report_options["history"] == True:
+                database=CTDataBase()
+                database.insert_execution_record(str(Session.__test_details),str(Session.__report_options))
+                for test in Session._tests:
+                    database.insert_test_record(test._name,
+                                                test._id,
+                                                test._description,
+                                                test._start_time,
+                                                test._end_time,
+                                                test._duration,
+                                                test._result,
+                                                test._priority,
+                                                test._logs)
 
             html_report.generate(Session.__report_options, Session.__test_details, Session._tests,
                                  Session._report_directory_path,
