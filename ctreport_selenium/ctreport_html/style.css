@@ -12,7 +12,13 @@ html,body{
 .cursor-pointer{
 	cursor: pointer;
 }
-
+.cut-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 240px;
+  white-space: nowrap;
+  display: inline-block;
+}
 #myImg {
   border-radius: 5px;
   cursor: pointer;
