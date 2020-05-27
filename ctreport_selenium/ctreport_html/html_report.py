@@ -14,8 +14,9 @@ def head(tests, title):
     <html>
     <head>
         ''' + t + '''
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/c728cbf4/ctreport_selenium/ctreport_html/style.css" />
+		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/0d9f6e27/ctreport_selenium/ctreport_html/style.css" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
 		<link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -196,6 +197,6 @@ def modal_details(tests):
 def generate(report_options, test_details, tests, report_directory_path, filename):
     head_part = head(tests, report_options["title"])
     body_part = body(test_details, report_options, tests, overall_test_status(tests))
-    f = open(report_directory_path + "TestReport_" + filename + ".html", 'w')
+    f = open(report_directory_path + "TestReport_" + filename + ".html", 'w',encoding="utf-8")
     f.write(head_part + body_part)
     f.close()
