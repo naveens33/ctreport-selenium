@@ -211,14 +211,14 @@ def section(tests):
     c = ''''''
     for test in tests:
         section_head = '''
-        <li class="list-group-item font-weight-bold" style="background-color:rgb(0,0,0,0.1); display: flex; justify-content: space-between;">
+        <li class="list-group-item font-weight-bold test-details-header" >
             <span>{} {}</span>
             <i id="expand" class="fas fa-caret-square-down pointer" style=" font-size:x-large;" data-toggle="collapse" data-target="#moredetails{}" onclick='expandFunction("{}")'></i>
         </li>
         '''.format(test._id, test._name, index, test._id)
 
         more_details = '''
-        <li id="moredetails{}" class="list-group-item small panel-collapse collapse">
+        <li id="moredetails{}" class=" more-details list-group-item small panel-collapse collapse">
             <div class="row">
                 <div class="col-5">
                     <div class="row">
@@ -261,7 +261,7 @@ def section(tests):
 
         test_steps = '''
         <li class="list-group-item">
-            <table class="table medium table-borderless table-hover">
+            <table class="table medium table-borderless table-hover test-details-content">
                 <thead class="small border-bottom">
                     <tr>
                         <th class="text-sm-center" >STATUS</th>

@@ -1,6 +1,62 @@
 html,body{
   font-family: 'Poppins', sans-serif; 
-  background-color: #EAF0F7;
+  background: #dfd7db;	
+  color:#fff;
+}
+.header,.footer-heading{
+	background:#3f404f;
+	color:#fff;}
+.footer-section{
+	background-color: #37333a;
+}
+.report-title{
+	color:#ffffff;
+	background:#b05c5e;
+	}
+.toggle-icon{
+	color:#b05c5e;
+}
+.text-info_ {
+	color:#b05c5e!important;
+}
+.test-details-header{
+	background-color:#37333a!important; 
+	display: flex!important; 
+	justify-content: space-between;
+	color:#fff;
+}
+.more-details{
+	background:#3f404f!important;
+	color:	#fff!important;
+}
+.test-details-content{
+	background:#3f404f!important;
+	color:	#fff!important;
+}
+.tooltip-inner {
+  background-color:#3dd3e2 !important;
+  color: #000!important;
+}
+
+.tooltip.top .tooltip-arrow {
+  border-top-color: #b05c5e!important;
+}
+
+.tooltip.right .tooltip-arrow {
+  border-right-color:#b05c5e!important;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  border-bottom-color:#b05c5e!important;
+}
+
+.tooltip.left .tooltip-arrow {
+  border-left-color:#b05c5e!important;
+}
+
+.badge-style1 {
+    color: #fff;
+    background-color: #b05c5e;
 }
 .pointer {cursor: pointer;}
 .pading{
@@ -12,6 +68,7 @@ html,body{
 .cursor-pointer{
 	cursor: pointer;
 }
+
 .cut-text {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -19,6 +76,7 @@ html,body{
   white-space: nowrap;
   display: inline-block;
 }
+
 #myImg {
   border-radius: 5px;
   cursor: pointer;
@@ -132,7 +190,8 @@ html,body{
 
 /*Test Details*/
 .test_details{
-	background-color: white;
+	background-color: #3f404f;
+	color:#fff!important;
 }
 
 /* Search */
@@ -200,7 +259,7 @@ display: flex;
     max-height: 518px;
 }
 .chart{
-	background-color: white;
+	background-color: #3f404f;
 	min-height: 400px;    
 	max-height: 518px;
 }
@@ -218,14 +277,14 @@ display: flex;
 /* BOX */
 
 .box-table{
-	background-color:white;
+	background-color:#3f404f;
 	height: 100%;
-	color: #50649C;
+	color: #fff;
 padding:20px 20px 4px 20px;
 }
 
 .table_{
-color: #50649C;
+color: #fff;
 font-size:15px;
 }
 .box h6 {
@@ -245,17 +304,18 @@ font-size:15px;
 }
 
 .box h2, p {
-    color: #50649C;
+    color: #fff;
     font-size: 15px;
 }
 
 .box {
-    background-color: white;
+    background-color: #3f404f;
     padding: 20px;
     height: 146px;
 }
 .icon-flask, .icon-alarm-clock, .icon-clock, .icon-stopwatch {
     font-size: 50px;
+	color: #fff;
 }
 
 /* filter */
@@ -293,6 +353,7 @@ font-size:15px;
 .listDetails .fas {
     color: #3181F1;
 }
+
 .listDetails {
     display: flex;
     padding: 20px;

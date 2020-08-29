@@ -6,17 +6,18 @@ from ctreport_selenium.utility_classes import Severity, Status
 import math
 
 
-def head(tests, title):
+def head(theme, tests, title):
     t = '''
         <title>{}</title>
     '''.format(title)
+    css_file = r"C:\Users\naveen.s\PycharmProjects\validate_ctreport_selenium\unittest_sample\reports\28_08_20_150058\style-white-demon.css" if theme =="Dark Angel" else "https://cdn.statically.io/gh/naveens33/ctreport-selenium/0d9f6e27/ctreport_selenium/ctreport_html/style.css"
     content = '''
     <html>
     <head>
         ''' + t + '''
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/0d9f6e27/ctreport_selenium/ctreport_html/style.css" />
+		<link rel="stylesheet" type="text/css" href="'''+css_file+'''" />
 		<link rel="stylesheet" type="text/css" href="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/font/MoonIcon.css" />
 		<link rel = 'stylesheet' href = 'https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,16 +31,16 @@ def head(tests, title):
 		<link rel = "icon" href =  "https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" type = "image/x-icon"> 
 		<script type = 'text/javascript'>
 		    ''' + \
-              status.chart(overall_test_status(tests)) + '''
+              status.chart(theme,overall_test_status(tests)) + '''
             window.onload = function() {
                 ''' + \
-              timeline.chart(tests) + '''
+              timeline.chart(theme,tests) + '''
                     ''' + \
-              priority.chart(tests) + '''
+              priority.chart(theme,tests) + '''
                     ''' + \
-              assertion.chart(assert_verify_count(tests, "assert")) + '''
+              assertion.chart(theme,assert_verify_count(tests, "assert")) + '''
                     ''' + \
-              verification.chart(assert_verify_count(tests, "verify")) + \
+              verification.chart(theme,assert_verify_count(tests, "verify")) + \
               '''
             };
         </script>
@@ -85,27 +86,27 @@ def body(test_details, report_options, tests, status):
     <body class="ash">
         <!--<button onclick='topFunction()' id='myBtn' title='Go to top'>Top</button>-->
         <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white" style="padding:0px">
+        <nav class="header  navbar navbar-expand-lg navbar-light" style="padding:0px">
             <div class="container-fluid">
 				<!-- logo -->
 				<div class="Logo-Search" style="padding: 6px 0;">
 					''' + logo_tag + '''
                     <div style="margin-right: auto;">
-						<div class="badge badge-light" style="font-size: large; padding:8px; margin-top:5px;">
+						<div class="badge report-title" style="font-size: large; padding:8px; margin-top:5px;">
 							<span >''' + test_details["test_execution_name"] + '''</span>
 						</div>
 					</div>
 					<!-- Search & Client logo -->
 					<div class="right-logos"> 
 					   <div class="search-client" >
-							<div id="graph" onclick="display_other_page()" class="cursor-pointer" style="display: none; padding-right:20px; margin-top:6px;" data-toggle="tooltip" data-placement="bottom" title="Click to toggle dashboard">
-								<i class="fa fa-bar-chart" style="font-size:30px; color:#808080;"></i>
+							<div id="graph" onclick="display_other_page()" class="cursor-pointer" style="display: none; padding-right:20px; margin-top:6px;" data-toggle="tooltip" data-placement="left" title="Click to toggle dashboard">
+								<i class="fa fa-bar-chart toggle-icon" style="font-size:30px;"></i>
 							</div>
-							<div id="testdetails" class="cursor-pointer" style="padding-right:20px; margin-top:6px;" onclick="display_other_page()" data-toggle="tooltip" data-placement="bottom" title="Click to toggle test details">
-								<i class="fas fa-tasks" style="font-size:30px; color:#808080;"></i>
+							<div id="testdetails" class="cursor-pointer" style="padding-right:20px; margin-top:6px;" onclick="display_other_page()" data-toggle="tooltip" data-placement="left" title="Click to toggle test details">
+								<i class="fas fa-tasks toggle-icon" style="font-size:30px;"></i>
 							</div>
 							<a class="navbar-brand disabled">
-								<img  class="img-fluid" src="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" style="height: 30px;">
+								<img  class="img-fluid toggle-icon" src="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" style="height: 30px;">
 							</a>					
 						</div>
 					</div>
@@ -195,7 +196,7 @@ def modal_details(tests):
 
 
 def generate(report_options, test_details, tests, report_directory_path, filename):
-    head_part = head(tests, report_options["title"])
+    head_part = head(report_options["theme"],tests, report_options["title"])
     body_part = body(test_details, report_options, tests, overall_test_status(tests))
     f = open(report_directory_path + "TestReport_" + filename + ".html", 'w',encoding="utf-8")
     f.write(head_part + body_part)

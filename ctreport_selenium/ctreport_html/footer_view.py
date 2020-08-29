@@ -1,12 +1,12 @@
 def content():
     c = '''
     <footer class="footer">
-        <div class="bg-light pl-4 p-2">
+        <div class="footer-heading pl-4 p-2">
             <span id="reference">
             <i class="fas fa-caret-right pr-1 pointer" onclick="expandFooter('foot')" style="font-size:20px"></i>
             Reference</span>
         </div>
-        <section class="pading test_details">
+        <section class="pading footer-section">
             <div class="row">
                 <div class=" col-sm-4 col-md col-sm-4  col-12 col">						
                     <div id="footer" class="row hide"> 

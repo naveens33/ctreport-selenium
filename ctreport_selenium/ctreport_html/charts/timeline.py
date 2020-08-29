@@ -1,4 +1,4 @@
-def chart(tests):
+def chart(theme, tests):
     id_name_dict = {}
     min_li = []
     for test in tests:
@@ -8,7 +8,27 @@ def chart(tests):
         min = float(duration[1])
         sec = float(duration[2]) + min * 60 + hour * 60 * 60
         min_li.append(sec)
-
+    backgroundColor = "rgba(95, 164, 186,0.5)" if theme == "Dark Angel" else "rgba(188, 216, 249,0.4)"
+    borderColor = "#e8f2fd" if theme == "Dark Angel" else "rgb(188, 216, 249)"
+    pointBorderColor =  "#ffffff" if theme == "Dark Angel" else "#000000"
+    scales = '''scales: {
+        yAxes: [{
+            ticks: {
+                fontColor: '#fff'
+            },
+            gridLines: {
+                color: "rgba(176, 92, 94,0.5)",
+            }
+        }],
+        xAxes: [{
+            ticks: {
+                fontColor: '#fff'
+            },
+            gridLines: {
+                color: "rgba(176, 92, 94,0.5)",
+            }
+        }]
+    },''' if theme == "Dark Angel" else ""
     content = '''
         var dict= ''' + str(id_name_dict) + '''
         var timelinechart = new Chart(document.getElementById("timelinechart"), {
@@ -17,10 +37,10 @@ def chart(tests):
                 labels: ''' + str(list(id_name_dict.keys())) + ''',
                 datasets: [
                     {
-                        backgroundColor:"rgba(188, 216, 249,0.4)",
-                        borderColor:"rgb(188, 216, 249)",
+                        backgroundColor:"'''+backgroundColor+'''",
+                        borderColor:"'''+borderColor+'''",
                         pointBackgroundColor: "rgba(188, 216, 249,0.6)",
-                        pointBorderColor: "#000000",
+                        pointBorderColor: "'''+pointBorderColor+'''",
                         pointStyle:"crossRot",
                         showLine:true,
                         data: ''' + str(min_li) + ''',
@@ -32,6 +52,7 @@ def chart(tests):
                 legend: {
                     display: false
                 },
+                '''+scales+'''
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {

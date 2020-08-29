@@ -52,8 +52,8 @@ def summary_table(tests, reference):
             </tr>
         '''.format(test._result, test._id, status[test._result][0], status[test._result][1],
                    priority[test._priority][0],
-                   priority[test._priority][1], test._id, test._name,test._name)
-    tr+='''
+                   priority[test._priority][1], test._id, test._name, test._name)
+    tr += '''
     <tr class="NoTest hide border-bottom">
                 <td class="align-middle text-sm-center" colspan="4">
                     No Test Found
@@ -61,18 +61,18 @@ def summary_table(tests, reference):
     </tr>
     '''
     c = '''
-        <table class="table table-borderless table-hover " style="font-size: 15px;">
+        <table class="table table-borderless table-hover table_" style="font-size: 15px;">
         <thead>
           <tr class="text-sm-center border-bottom">
             <th>
                 Status
-                
-                '''+r+'''
+
+                ''' + r + '''
             </th>
             <th>
                 Priority
-                
-                '''+r+'''
+
+                ''' + r + '''
             </th>
             <th>ID</th>
             <th>Summary</th>

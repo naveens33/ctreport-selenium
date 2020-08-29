@@ -4,55 +4,68 @@
 
 ctreport-selenium is a simple, creative and customizable report for selenium automation testing using Python.
 
-## Sample
+## Feature
+
+* Different view of your test execution result
+* Dashboard view with multiple graphs to understand the tests
+* Test Detail view to show complete test
+* Filter and Search any test
+* Reference section for ctreport-selenium specific terminologies like Status, Priority, and Severity
+* Customizable option through JSON file
+* Screenshots better view
+* Toast message for every endpoint of the report for the clear understanding
+* Fairly mobile friendly
 
 ![Sample Image](ctreport_sample.gif)
+
 
 ### Installation and Usage
 
 ```pip install ctreport-selenium```
 
-### Define Session 
-
+### Define reportconfig.json file
 First, you should define the session. While creating session session_details and report_options can be defined/modified.
 
 In session_details, you can provide the current test session details
 
+[reportconfig.json](ctreport_selenium/reportconfig.json)
+
 ```
-session_details = {
-            "owner": "Naveen.S",
-            "application": "MyApp1",
-            "application version": "V1.04",
-            "os": "Windows10",
-            "browser": "Chrome"
-        }
+"session_details" : {
+      "Owner": "Naveen.S",
+      "application_name": "MyApp1",
+      "application_version": "V1.04",
+      "platform": "Windows10",
+      "additional_information":"Browser - Chrome 84"
+},
 ```
 
 In report_options, below properties can be provided
 
+* theme (Default/Dark Angel) (Currently ctreport-selenium supports two theme 1. Default 2. Dark Angel)
 * title (report title)
 * logo (your company logo)
 * show_reference (reference section)
 * zip_if_screenshot (In case, the screenshot is created then you can select this option to create zip file- report+screenshot )
 
  ```
- report_options = {
-            "title": "Test Report",
-            "logo": r"D:\MYLOGO.PNG",
-            "show_reference": True,
-            "zip_if_screenshot": True
-        }
+  "report_options" :{
+      "theme": "Default",
+      "title": "Test Report",
+      "logo": "MYLOGO.PNG",
+      "show_reference": "True",
+      "zip_if_screenshot": "True"
+ }
  ```
 
 **Start the Session**
 
 ```
 driver = webdriver.Chrome(executable_path=r'chromedriver.exe')
-Session.start(test_name="Smoke Test - MyApp1", 
-              path="D:\\reports",
-              driver=driver, 
-              session_details=session_details, 
-              report_options=report_options)
+Session.start(test_execution_name="Smoke Test - MyApp1",
+            path="D:\\reports",
+            driver=cls.driver,
+            config_file=r"D:\\reportconfig.json")
 ```
 
 
@@ -138,3 +151,7 @@ Note: All assertions are treated as Blocker severity
 |Critical|Essential functionality is not functioning and no acceptable workaround|
 |Major|Essential functionality is not functioning unless acceptable workaround is implemented|
 |Minor|Minor inconvenience in the functionality and application remains operational|
+
+## Issues
+
+If you encounter any problems, please file an issue along with a detailed description.
