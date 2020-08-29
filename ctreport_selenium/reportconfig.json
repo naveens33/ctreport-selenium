@@ -1,0 +1,17 @@
+{
+      "session_details" : {
+      "Owner": "Naveen.S",
+      "application_name": "MyApp1",
+      "application_version": "V1.04",
+      "platform": "Windows10",
+      "additional_information":"Browser - Chrome 84"
+  },
+
+  "report_options" :{
+      "theme": "Default",
+      "title": "Test Report",
+      "logo": "MYLOGO.PNG",
+      "show_reference": "True",
+      "zip_if_screenshot": "True"
+  }
+}

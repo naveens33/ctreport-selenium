@@ -1,7 +1,7 @@
 content = '''
 <script>
 		function toast_message(status) {
-		console.log("Hello");
+		
 			toastr.options = {
 				"closeButton": false,
 				"debug": false,
@@ -12,14 +12,20 @@ content = '''
 				"onclick": null,
 				"showDuration": "300",
 				"hideDuration": "400",
-				"timeOut": "2000",
+				"timeOut": "5000",
 				"extendedTimeOut": "1000",
 				"showEasing": "swing",
 				"hideEasing": "linear",
 				"showMethod": "fadeIn",
 				"hideMethod": "fadeOut"
 			};
-			toastr["success"]("Filter applied- status: "+status.replace(/^./, status[0].toUpperCase()));
+			if(status=="all")
+			{
+				toastr["info"]("Filter Removed");
+			}
+			else{
+			toastr["info"]("Filtered "+status.replace(/^./, status[0].toUpperCase())+" Test Cases");
+			}
 		};
 	</script>
 '''

@@ -1,7 +1,7 @@
 from ctreport_selenium.utility_classes import Status, Priority
 
 
-def chart(tests):
+def chart(theme, tests):
     pass_ = [0, 0, 0]
     fail_ = [0, 0, 0]
     skip_ = [0, 0, 0]
@@ -35,7 +35,17 @@ def chart(tests):
                 broken_[1] += 1
             else:
                 broken_[2] += 1
-
+    label = "labels: {fontColor:'#fff'}" if theme == "Dark Angel" else ""
+    xAxis_ticks_gridlines = '''ticks: {
+                        fontColor: '#fff'
+                    },
+					gridLines: {
+					  color: "rgba(176, 92, 94,0.5)",
+					}''' if theme == "Dark Angel" else ""
+    yAxis_gridlines = '''
+                    gridLines: {
+					  color: "rgba(176, 92, 94,0.5)",
+					}''' if theme == "Dark Angel" else ""
     content = '''
         var prioritychart=new Chart(document.getElementById("prioritychart"), {
         type: 'bar',
@@ -67,12 +77,14 @@ def chart(tests):
                 text: 'Group under Priority'
             },
             legend: {
-                position:'bottom'
+                position:'bottom',
+                '''+label+'''
             },
             scales: {
                 xAxes: [{
                     barThickness : 25,
-                    barPercentage: 169,			
+                    barPercentage: 169,
+                    '''+xAxis_ticks_gridlines+'''			
                 }],
                 yAxes: [{
                     display: true,
@@ -80,7 +92,8 @@ def chart(tests):
                         display: false,
                         maxTicksLimit: 6,
                         precision:0,
-                    }
+                    },
+                    '''+yAxis_gridlines+'''
                 }],
             }
         }

@@ -10,7 +10,7 @@ content = '''
         tr=tbody.getElementsByTagName("tr");
         div1=document.querySelectorAll("div#search2>div");
         //console.log("no of div2: "+div2.length);
-        for (i = 0; i < tr.length; i++) {
+        for (i = 0; i < tr.length-1; i++) {
             span=tr[i].querySelectorAll("td span:nth-child(1)");
             if(span)
             {
@@ -31,7 +31,7 @@ content = '''
             if(span)
             {
                 id=span[0].innerHTML.split(" ")[0];
-                test_name=span[0].innerHTML.split(" ")[1];
+                test_name=span[0].innerHTML;
                 if((test_name.toUpperCase().indexOf(search_term)>-1)
                 ||(id.toUpperCase().indexOf(search_term)>-1)){
                     div1[i].style.display = "";

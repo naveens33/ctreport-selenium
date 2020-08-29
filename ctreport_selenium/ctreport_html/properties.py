@@ -21,5 +21,5 @@ severity = {
 }
 
 info_ = {
-    "class": "fas fa-info-circle text-info",
+    "class": "fas fa-info-circle text-info_",
 }

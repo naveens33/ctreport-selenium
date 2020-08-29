@@ -1,7 +1,9 @@
 content = '''
     <script>
         $(document).ready(function(){
-          $('[data-toggle="tooltip"]').tooltip();
+          $('#testdetails').tooltip().mouseover();
+			setTimeout(function(){ $('#testdetails').tooltip('hide'); }, 5000);
+			$('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     '''

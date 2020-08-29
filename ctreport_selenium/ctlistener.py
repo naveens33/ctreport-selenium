@@ -1,53 +1,62 @@
 from datetime import datetime
 from ctreport_selenium.utility_classes import Priority, Severity, Status
 from ctreport_selenium.ctreport_html import html_report
-from ctreport_selenium.ctdbupdate import CTDataBase
 import os, sys, copy
-
+import json
 
 class Session:
     _tests = []
     _report_directory_path = ""
     # _jsonfile_directory_path = ""
     _driver = None
-    __test_details = {}
-    __default_options = {
-        "title": "Test Report",
-        "logo": "",
-        "show_reference": True,
-        "zip_if_screenshot": False,
-        "history": False
-    }
 
     @staticmethod
-    def __validate_report_options(report_options):
-        for key in Session.__default_options.keys():
-            if not key in report_options.keys():
-                report_options[key] = Session.__default_options[key]
-            if type(report_options[key]) != type(Session.__default_options[key]):
-                report_options.pop(key)
-                report_options[key] = Session.__default_options[key]
-        return report_options
+    def __validate_options(options, default_options):
+        options = {k.lower(): v for k, v in options.items()}
+        for key in default_options.keys():
+            if not key in options.keys():
+                options[key] = default_options[key]
+        options1 = copy.deepcopy(options)
+        for key in options1.keys():
+            if not key in default_options.keys():
+                options.pop(key)
+        return options
 
     @staticmethod
-    def start(test_name, path=os.path.abspath('.') + "/report/", driver=None, session_details=None,
-              report_options=None):
-        if report_options is None:
-            Session.__report_options = Session.__default_options
-        else:
-            Session.__report_options = Session.__validate_report_options(report_options)
-        if session_details is None:
-            Session.__test_details = {}
-        else:
-            Session.__test_details = session_details
-        Session.__test_details["test_execution_name"] = test_name
-        Session.__test_details["start_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
+    def __parse_json(config_file):
+        # Opening JSON file
+        Session.__report_options = {
+            "theme":"Default",
+            "title": "Test Report",
+            "logo": "",
+            "show_reference": True,
+            "zip_if_screenshot": False,
+        }
+        try:
+            with open(config_file) as json_file:
+                data = json.load(json_file)
+                try:
+                    Session.__session_details = data["session_details"]
+                except KeyError:
+                    pass
+                try:
+                    Session.__report_options =  Session.__validate_options(data["report_options"], Session.__report_options)
+                except KeyError:
+                    pass
+        except FileNotFoundError as err:
+            print("Config file not found")
+        except json.decoder.JSONDecodeError as err:
+            print("Config file has some issue")
+
+    @staticmethod
+    def start(test_execution_name, path=os.path.abspath('.') + "/report/", driver=None, config_file=None):
+        if config_file is not None:
+            Session.__parse_json(config_file)
+        Session.__session_details["test_execution_name"] = test_execution_name
+        Session.__session_details["start_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
         Session.__filename = datetime.now().strftime("%d_%m_%y_%H%M%S")
         Session._report_directory_path = os.path.abspath(path) + "\\" + Session.__filename + "\\"
-        # Session.__jsonfile_directory_path = os.path.abspath(path) + "\\jsonfiles\\"
         os.makedirs(Session._report_directory_path)
-        # if os.path.exists(Session.__jsonfile_directory_path) is not True:
-        #    os.makedirs(Session.__jsonfile_directory_path)
         Session._driver = driver
 
     @staticmethod
@@ -63,10 +72,10 @@ class Session:
     @staticmethod
     def end():
         if len(Session._tests) != 0:
-            Session.__test_details["end_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
-            Session.__test_details["duration"] = str(
-                datetime.strptime(Session.__test_details["end_time"], '%d-%m-%y %H:%M:%S')
-                - datetime.strptime(Session.__test_details["start_time"], '%d-%m-%y %H:%M:%S'))
+            Session.__session_details["end_time"] = datetime.now().strftime("%d-%m-%y %H:%M:%S")
+            Session.__session_details["duration"] = str(
+                datetime.strptime(Session.__session_details["end_time"], '%d-%m-%y %H:%M:%S')
+                - datetime.strptime(Session.__session_details["start_time"], '%d-%m-%y %H:%M:%S'))
             '''
             for test in Session._tests:
                 print(test._name,
@@ -78,28 +87,14 @@ class Session:
                       test._result,
                       test._priority,
                       test._logs)
-            print(Session.__test_details)
+            print(Session.__session_details)
             '''
-            # ctgeneratejsonfile.generate(Session.__test_details, Session._tests, Session.__jsonfile_directory_path + Session.__filename + ".json")
+            #print(Session.__session_details)
             if len(os.listdir(Session._report_directory_path)) == 0 and Session.__report_options[
                 "zip_if_screenshot"]:
                 Session.__report_options["zip_if_screenshot"] = False
 
-            if Session.__report_options["history"] == True:
-                database=CTDataBase()
-                database.insert_execution_record(str(Session.__test_details),str(Session.__report_options))
-                for test in Session._tests:
-                    database.insert_test_record(test._name,
-                                                test._id,
-                                                test._description,
-                                                test._start_time,
-                                                test._end_time,
-                                                test._duration,
-                                                test._result,
-                                                test._priority,
-                                                test._logs)
-
-            html_report.generate(Session.__report_options, Session.__test_details, Session._tests,
+            html_report.generate(Session.__report_options, Session.__session_details, Session._tests,
                                  Session._report_directory_path,
                                  Session.__filename)
             if Session.__report_options["zip_if_screenshot"]:
