@@ -1,4 +1,4 @@
-![Logo](/ctreport_selenium/ctreport_html/resource/logo.png) 
+![Logo](https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/ctreport_html/resource/logo-nobg.png)
 
 # CT Report for Selenium
 
@@ -16,7 +16,7 @@ ctreport-selenium is a simple, creative and customizable report for selenium aut
 * Toast message for every endpoint of the report for the clear understanding
 * Fairly mobile friendly
 
-![Sample Image](ctreport_sample.gif)
+![Sample Image](https://github.com/naveens33/ctreport-selenium/blob/master/ctreport_sample.gif)
 
 
 ### Installation and Usage
@@ -28,7 +28,7 @@ First, you should define the session. While creating session session_details and
 
 In session_details, you can provide the current test session details
 
-[reportconfig.json](ctreport_selenium/reportconfig.json)
+[reportconfig.json](https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/reportconfig.json)
 
 ```
 "session_details" : {
@@ -154,4 +154,4 @@ Note: All assertions are treated as Blocker severity
 
 ## Issues
 
-If you encounter any problems, please file an issue along with a detailed description.
+If you encounter any problems, please file an [issue](https://github.com/naveens33/ctreport-selenium/issues) along with a detailed description.

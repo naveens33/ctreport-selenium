@@ -10,7 +10,7 @@ def head(theme, tests, title):
     t = '''
         <title>{}</title>
     '''.format(title)
-    css_file = r"C:\Users\naveen.s\PycharmProjects\validate_ctreport_selenium\unittest_sample\reports\28_08_20_150058\style-white-demon.css" if theme =="Dark Angel" else "https://cdn.statically.io/gh/naveens33/ctreport-selenium/0d9f6e27/ctreport_selenium/ctreport_html/style.css"
+    css_file = "https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/ctreport_html/resource/style-dark-angel.css" if theme =="Dark Angel" else "https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/ctreport_html/resource/style.css"
     content = '''
     <html>
     <head>
@@ -28,7 +28,7 @@ def head(theme, tests, title):
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-		<link rel = "icon" href =  "https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" type = "image/x-icon"> 
+		<link rel = "icon" href =  "https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/ctreport_html/resource/logo-nobg.png" type = "image/x-icon"> 
 		<script type = 'text/javascript'>
 		    ''' + \
               status.chart(theme,overall_test_status(tests)) + '''
@@ -106,7 +106,7 @@ def body(test_details, report_options, tests, status):
 								<i class="fas fa-tasks toggle-icon" style="font-size:30px;"></i>
 							</div>
 							<a class="navbar-brand disabled">
-								<img  class="img-fluid toggle-icon" src="https://cdn.statically.io/gh/naveens33/ctreport-selenium/5bbcc32f/ctreport_html/resource/logo.png" style="height: 30px;">
+								<img  class="img-fluid toggle-icon" src="https://cdn.statically.io/gh/naveens33/ctreport-selenium/9a6cfed9/ctreport_selenium/ctreport_html/resource/logo-nobg.png" style="height: 30px;">
 							</a>					
 						</div>
 					</div>
